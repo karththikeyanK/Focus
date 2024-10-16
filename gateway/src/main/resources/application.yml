@@ -1,0 +1,33 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: API-GATEWAY
+  main:
+    web-application-type: reactive
+
+  cloud:
+    gateway:
+      routes:
+        - id: email-sender-service
+          uri: lb://EMAIL-SENDER-SERVICE
+          predicates:
+            - Path=/EMAIL-SENDER-SERVICE/**
+          filters:
+            - RewritePath=/EMAIL-SENDER-SERVICE/(?<remaining>.*), /$\{remaining}
+
+        - id: rule-engine-service
+          uri: lb://RULE-ENGINE-SERVICE
+          predicates:
+            - Path=/RULE-ENGINE-SERVICE/**
+          filters:
+            - RewritePath=/RULE-ENGINE-SERVICE/(?<remaining>.*), /$\{remaining}
+
+
+
+
+
+
+
+
