@@ -46,6 +46,32 @@ public class ApproverService {
         return ApproverDtoMapper.mapToResponse(approver);
     }
 
+    public ApproverResponse update(Long id,ApproverRequest approverRequest) {
+        log.info("ApproverService::update:: is start with user id: {}", approverRequest.getUserId());
+        Approver approver = approverRepository.findById(id)
+                .orElseThrow(() -> new DuplicationException("Approver not found with id: "+id));
+
+        User user = ServiceUtil.validateEntity(
+                userService.existById(approverRequest.getUserId()),
+                () -> entityManager.getReference(User.class, approverRequest.getUserId()),
+                "User",
+                approverRequest.getUserId()
+        );
+        User approverUser = ServiceUtil.validateEntity(
+                userService.existById(approverRequest.getApproverId()),
+                () -> entityManager.getReference(User.class, approverRequest.getApproverId()),
+                "Approver",
+                approverRequest.getApproverId()
+        );
+        if (!approverRequest.getApproverId().equals(approver.getApprover().getId()) && approverRepository.existsByUserIdAndApproverId(approverRequest.getUserId(), approverRequest.getApproverId())){
+            log.error("ApproverService::update:: Approver already exists");
+            throw new DuplicationException("Approver already exists");
+        }
+        approverRepository.save(approver);
+        log.info("ApproverService::update:: is end with user id: {}", approverRequest.getUserId());
+        return ApproverDtoMapper.mapToResponse(approver);
+    }
+
     public List<ApproverResponse> getApproverList(Long userId){
         log.info("ApproverService::getApproverList:: is start with user id: {}", userId);
         User user = ServiceUtil.validateEntity(
@@ -72,4 +98,5 @@ public class ApproverService {
         approverRepository.deleteById(approverId);
         log.info("ApproverService::delete:: is end with approver id: {}", approverId);
     }
+
 }
