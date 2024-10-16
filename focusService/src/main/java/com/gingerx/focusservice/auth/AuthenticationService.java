@@ -1,12 +1,23 @@
 package com.gingerx.focusservice.auth;
 
 
+import com.gingerx.focusservice.config.JwtService;
+import com.gingerx.focusservice.dto.AuthenticationRequest;
+import com.gingerx.focusservice.dto.AuthenticationResponse;
+import com.gingerx.focusservice.dto.UserRequest;
+import com.gingerx.focusservice.entity.User;
+import com.gingerx.focusservice.exception.JwtAuthenticationException;
+import com.gingerx.focusservice.repository.UserRepository;
+import com.gingerx.focusservice.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
@@ -22,10 +33,9 @@ public class AuthenticationService {
         log.info("AuthenticationService::Registering user started");
         User user = usersService.Register(userRequest);
         log.info("AuthenticationService::Registering user completed");
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = jwtService.generateToken(new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>()));
         return AuthenticationResponse.builder()
                 .token(jwtToken)
-                .role(user.getRole().toString())
                 .id(user.getId())
                 .build();
       }catch (Exception e){
@@ -45,15 +55,15 @@ public class AuthenticationService {
             );
         } catch (BadCredentialsException e) {
             log.error("AuthenticationService::Authenticating user failed due to invalid credentials");
-            throw new JwtAuthenticationExcception("Invalid credentials");
+            throw new JwtAuthenticationException("Invalid credentials");
         }
 
-        var user = repository.findByEmail(request.getEmail()).orElseThrow(()->new JwtAuthenticationExcception("User not found with email "+request.getEmail()));
-        var jwtToken = jwtService.generateToken(user);
+        var user = repository.findByEmail(request.getEmail()).orElseThrow(()->new JwtAuthenticationException("User not found with email "+request.getEmail()));
+        UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
+        var jwtToken = jwtService.generateToken(userDetails);
         log.info("AuthenticationService::Authenticating user completed");
         return AuthenticationResponse.builder()
                 .token(jwtToken)
-                .role(user.getRole().toString())
                 .id(user.getId())
                 .build();
     }

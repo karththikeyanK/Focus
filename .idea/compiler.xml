@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="eurekaServer" />
         <module name="gateway" />
+        <module name="focusService" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -20,7 +21,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Focus" options="" />
       <module name="eurekaServer" options="-parameters" />
-      <module name="focusService" options="" />
+      <module name="focusService" options="-parameters" />
       <module name="gateway" options="-parameters" />
     </option>
   </component>

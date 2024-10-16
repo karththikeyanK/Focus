@@ -1,0 +1,31 @@
+package com.gingerx.focusservice.dtoMapper;
+
+import com.gingerx.focusservice.dto.UserRequest;
+import com.gingerx.focusservice.dto.UserResponse;
+import com.gingerx.focusservice.entity.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+public class UserDtoMapper {
+
+    public static User mapToEntity(UserRequest userRequest, PasswordEncoder passwordEncoder){
+        return User.builder()
+                .firstName(userRequest.getFirstName())
+                .lastName(userRequest.getLastName())
+                .email(userRequest.getEmail())
+                .password(passwordEncoder.encode(userRequest.getPassword()))
+                .vCode(userRequest.getVCode())
+                .vCodeTime(userRequest.getVCodeTime())
+                .status(userRequest.getStatus())
+                .build();
+    }
+
+    public static UserResponse mapToResponse(User user) {
+        return UserResponse.builder()
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .status(user.getStatus())
+                .build();
+    }
+}

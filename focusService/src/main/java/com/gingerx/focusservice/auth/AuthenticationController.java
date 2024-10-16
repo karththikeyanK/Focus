@@ -1,9 +1,9 @@
 package com.gingerx.focusservice.auth;
 
-import com.express.user.dto.AuthenticationRequest;
-import com.express.user.dto.AuthenticationResponse;
-import com.express.user.dto.UserRequest;
-import com.express.user.response.ApiResponse;
+import com.gingerx.focusservice.dto.AuthenticationRequest;
+import com.gingerx.focusservice.dto.AuthenticationResponse;
+import com.gingerx.focusservice.dto.UserRequest;
+import com.gingerx.focusservice.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,6 +1,6 @@
 package com.gingerx.focusservice.config;
 
-import com.express.user.exception.JwtAuthenticationExcception;
+import com.gingerx.focusservice.exception.JwtAuthenticationException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,7 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(authToken);
       }else{
         log.error("JwtAuthenticationFilter::doFilterInternal():: Invalid token");
-        throw new JwtAuthenticationExcception("Invalid token");
+        throw new JwtAuthenticationException("Invalid token");
       }
     }
     filterChain.doFilter(request, response);

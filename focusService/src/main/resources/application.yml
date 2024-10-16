@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: FOCUS-SERVICE
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost/focus_v1
+    username: karththi
+    password: example-password
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.MySQL8Dialect
+
+server:
+    port: 8080
+
+
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  openapi:
+    dev-url: http://localhost:8080
+    prod-url: https://bezkoder-api.com
+
+
+
+jwt:
+  secret: ElX2k8ifx9Vq8L7rGdLLEkLomyV0P1VR
