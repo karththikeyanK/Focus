@@ -1,9 +1,6 @@
 package com.gingerx.focusservice.controller;
 
-import com.gingerx.focusservice.exception.DataNotFoundException;
-import com.gingerx.focusservice.exception.DuplicationException;
-import com.gingerx.focusservice.exception.GeneralException;
-import com.gingerx.focusservice.exception.JwtAuthenticationException;
+import com.gingerx.focusservice.exception.*;
 import com.gingerx.focusservice.response.ApiErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +44,12 @@ public class ExceptionHandlerController {
     @ExceptionHandler(DataNotFoundException.class)
     public ResponseEntity<ApiErrorResponse> handleDataNotFoundException(DataNotFoundException e){
         log.error("ExceptionHandlerController: DataNotFoundException: {}", e.getMessage());
+        return ResponseEntity.badRequest().body(new ApiErrorResponse(ApiErrorResponse.ERROR, e.getMessage()));
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleResourceNotFoundException(ResourceNotFoundException e){
+        log.error("ExceptionHandlerController: ResourceNotFoundException: {}", e.getMessage());
         return ResponseEntity.badRequest().body(new ApiErrorResponse(ApiErrorResponse.ERROR, e.getMessage()));
     }
 
