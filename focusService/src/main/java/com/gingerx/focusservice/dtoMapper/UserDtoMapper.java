@@ -4,7 +4,9 @@ import com.gingerx.focusservice.dto.UserRequest;
 import com.gingerx.focusservice.dto.UserResponse;
 import com.gingerx.focusservice.entity.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserDtoMapper {
 
     public static User mapToEntity(UserRequest userRequest, PasswordEncoder passwordEncoder){

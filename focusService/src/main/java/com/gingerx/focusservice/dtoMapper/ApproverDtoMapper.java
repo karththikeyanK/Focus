@@ -5,7 +5,9 @@ import com.gingerx.focusservice.dto.ApproverResponse;
 import com.gingerx.focusservice.entity.Approver;
 import com.gingerx.focusservice.entity.User;
 import com.gingerx.focusservice.enums.ActiveStatus;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ApproverDtoMapper {
 
     public static Approver mapToEntity(ApproverRequest approverRequest, User user, User approver) {

@@ -3,7 +3,7 @@ package com.gingerx.focusservice.controller;
 import com.gingerx.focusservice.dto.UserRequest;
 import com.gingerx.focusservice.dto.UserResponse;
 import com.gingerx.focusservice.response.ApiResponse;
-import com.gingerx.focusservice.service.UsersService;
+import com.gingerx.focusservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
 public class UserController {
-    private final UsersService userService;
+    private final UserService userService;
 
     @PutMapping("/update")
     public ApiResponse<UserResponse> update(Long id, UserRequest userRequest) {

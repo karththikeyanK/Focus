@@ -21,7 +21,7 @@ import java.util.List;
 public class ApproverService {
     private final ApproverRepository approverRepository;
     private final EntityManager entityManager;
-    private final UsersService userService;
+    private final UserService userService;
 
     public ApproverResponse create(ApproverRequest approverRequest){
         log.info("ApproverService::create:: is start with user id: {}", approverRequest.getUserId());
@@ -97,6 +97,13 @@ public class ApproverService {
         }
         approverRepository.deleteById(approverId);
         log.info("ApproverService::delete:: is end with approver id: {}", approverId);
+    }
+
+    public boolean existById(Long id){
+        log.info("ApproverService::existById:: is start with id: {}", id);
+        boolean isExist = approverRepository.existsById(id);
+        log.info("ApproverService::existById:: is end with id: {}", id);
+        return isExist;
     }
 
 }
