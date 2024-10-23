@@ -9,16 +9,8 @@ on:
       - main  # Run on pull requests to 'main'
 
 jobs:
-  build:
+  build-eureka:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        service:
-          - eurekaServer
-          - gateway
-          - focusService
-          
 
     steps:
       # Checkout the code
@@ -32,19 +24,82 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      # Navigate to the service directory and run the Maven build
-      - name: Build with Maven
+      # Build Eureka service
+      - name: Build Eureka Server
         run: |
-          cd ${{ matrix.service }}
+          cd eurekaServer
           mvn clean install
 
-      # Run tests
-      - name: Run tests
+      # Run tests for Eureka service
+      - name: Run tests for Eureka Server
         run: |
-          cd ${{ matrix.service }}
+          cd eurekaServer
           mvn test
 
+      # Optional: Update dependency graph for Eureka
+      - name: Update dependency graph for Eureka
+        uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
 
-    # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
-      - name: Update dependency graph
+  build-gateway:
+    runs-on: ubuntu-latest
+    needs: build-eureka  # This job will only run if the build-eureka job completes successfully
+
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Set up JDK 17 (adjust version if needed)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # Build Gateway service
+      - name: Build Gateway
+        run: |
+          cd gateway
+          mvn clean install
+
+      # Run tests for Gateway service
+      - name: Run tests for Gateway
+        run: |
+          cd gateway
+          mvn test
+
+      # Optional: Update dependency graph for Gateway
+      - name: Update dependency graph for Gateway
+        uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+
+  build-focus:
+    runs-on: ubuntu-latest
+    needs: build-gateway  # This job will only run if the build-gateway job completes successfully
+
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Set up JDK 17 (adjust version if needed)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # Build Focus Service
+      - name: Build Focus Service
+        run: |
+          cd focusService
+          mvn clean install
+
+      # Run tests for Focus Service
+      - name: Run tests for Focus Service
+        run: |
+          cd focusService
+          mvn test
+
+      # Optional: Update dependency graph for Focus Service
+      - name: Update dependency graph for Focus Service
         uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
