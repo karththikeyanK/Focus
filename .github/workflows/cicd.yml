@@ -15,9 +15,9 @@ jobs:
     strategy:
       matrix:
         service:
-          - api-gateway
-          - focus-service
-          - eureka-server
+          - apiGateway
+          - focusService
+          - eurekaServer
 
     steps:
       # Checkout the code
