@@ -66,6 +66,22 @@ jobs:
     runs-on: ubuntu-latest
     needs: gateway  # This job depends on the gateway job
 
+    services:
+      mysql:
+        image: mysql:latest
+        env:
+          MYSQL_DATABASE: focus_v1
+          MYSQL_ROOT_PASSWORD: example-password
+          MYSQL_USER: karththi
+          MYSQL_PASSWORD: example-password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd mysqladmin ping -h localhost -u root --password=example-password
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       # Checkout the code
       - name: Checkout code
@@ -85,6 +101,10 @@ jobs:
           mvn clean install
 
       - name: Run tests for focusService
+        env:
+          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/focus_v1
+          SPRING_DATASOURCE_USERNAME: karththi
+          SPRING_DATASOURCE_PASSWORD: example-password
         run: |
           cd focusService
           mvn test
