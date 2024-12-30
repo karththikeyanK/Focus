@@ -108,6 +108,7 @@
     </dependencyManagement>
 
     <build>
+        <finalName>focus-service</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

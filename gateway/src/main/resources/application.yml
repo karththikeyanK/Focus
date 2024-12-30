@@ -10,6 +10,13 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: email-service
+          uri: lb://EMAIL-SERVICE
+          predicates:
+            - Path=/EMAIL-SERVICE/**
+          filters:
+            - RewritePath=/EMAIL-SERVICE/(?<remaining>.*), /$\{remaining}
+
         - id: focus-service
           uri: lb://FOCUS-SERVICE
           predicates:
@@ -17,10 +24,7 @@ spring:
           filters:
             - RewritePath=/FOCUS-SERVICE/(?<remaining>.*), /$\{remaining}
 
-
-
-
-
-
-
-
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/

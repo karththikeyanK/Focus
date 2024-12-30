@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/gateway/pom.xml" />
         <option value="$PROJECT_DIR$/focusService/pom.xml" />
         <option value="$PROJECT_DIR$/../Focus2/FocusService/pom.xml" />
+        <option value="$PROJECT_DIR$/emailService/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

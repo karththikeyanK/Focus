@@ -9,5 +9,5 @@ WORKDIR /app
 COPY ./target/gateway.jar /app/gateway.jar
 COPY ./wait-for-it.sh /wait-for-it.sh
 RUN chmod +x /wait-for-it.sh
-EXPOSE 8091
+EXPOSE 9090
 CMD ["/wait-for-it.sh", "eureka-server:8761", "--", "java", "-jar", "gateway.jar"]

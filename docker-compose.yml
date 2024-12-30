@@ -1,17 +1,4 @@
 services:
-
-  rabbitmq:
-    image: rabbitmq:3-management
-    container_name: rabbitmq
-    ports:
-      - "5672:5672"
-      - "15672:15672" # Management UI
-    environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
-    depends_on:
-      - api-gateway
-
   eureka-server:
     build:
       context: ./eurekaServer
@@ -23,6 +10,11 @@ services:
       SPRING_PROFILES_ACTIVE: docker
     networks:
       - app_network
+    healthcheck:
+      test: curl --fail http://localhost:8761/ || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   api-gateway:
     build:
@@ -32,24 +24,39 @@ services:
     ports:
       - "9090:9090"
     environment:
-      EUREKA_SERVER_URI: "http://eureka-server:8761/eureka/"
+      EUREKA_SERVER: http://eureka-server:8761/eureka/
       SPRING_PROFILES_ACTIVE: docker
     depends_on:
-      - eureka-server
+      eureka-server:
+        condition: service_healthy
     links:
       - eureka-server
     networks:
       - app_network
 
-  rule-engine:
+  email-service:
     build:
-      context: ./RuleEngineService
+      context: ./emailService
       dockerfile: Dockerfile
-    container_name: rule-engine
+    container_name: email-service
     ports:
-      - "9091:9091"
+      - "8091:8091"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/ruleEngine_v3
+      EUREKA_SERVER: http://eureka-server:8761/eureka/
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - focus-service
+    network_mode: "host"
+
+  focus-service:
+    build:
+      context: ./focusService
+      dockerfile: Dockerfile
+    container_name: focus-service
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/focus_v1
       SPRING_DATASOURCE_USERNAME: karththi
       SPRING_DATASOURCE_PASSWORD: example-password
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -58,21 +65,6 @@ services:
       SPRING_PROFILES_ACTIVE: docker
     depends_on:
       - eureka-server
-      - api-gateway
-    network_mode: "host"
-
-  email-sender:
-    build:
-      context: ./Email-Sender-Service
-      dockerfile: Dockerfile
-    container_name: email-sender
-    ports:
-      - "8091:8091"
-    environment:
-      EUREKA_SERVER: http://eureka-server:8761/eureka/
-      SPRING_PROFILES_ACTIVE: docker
-    depends_on:
-      - rabbitmq
       - api-gateway
     network_mode: "host"
 
