@@ -116,12 +116,12 @@ jobs:
         env:
           SPRING_MAIL_HOST: smtp.gmail.com
           SPRING_MAIL_PORT: 587
-          SPRING_MAIL_USERNAME: <email>
-          SPRING_MAIL_PASSWORD: <password>
-          SPRING_PROFILES_ACTIVE: test
+          SPRING_MAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
+          SPRING_MAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
         run: |
           cd emailService
           mvn test
+
 
   # Optional: Update dependency graph (if needed for all jobs)
   update-dependencies:
