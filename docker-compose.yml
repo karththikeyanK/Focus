@@ -1,0 +1,81 @@
+services:
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672" # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    depends_on:
+      - api-gateway
+
+  eureka-server:
+    build:
+      context: ./eurekaServer
+      dockerfile: Dockerfile
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    networks:
+      - app_network
+
+  api-gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    ports:
+      - "9090:9090"
+    environment:
+      EUREKA_SERVER_URI: "http://eureka-server:8761/eureka/"
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - eureka-server
+    links:
+      - eureka-server
+    networks:
+      - app_network
+
+  rule-engine:
+    build:
+      context: ./RuleEngineService
+      dockerfile: Dockerfile
+    container_name: rule-engine
+    ports:
+      - "9091:9091"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/ruleEngine_v3
+      SPRING_DATASOURCE_USERNAME: karththi
+      SPRING_DATASOURCE_PASSWORD: example-password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL8Dialect
+      EUREKA_SERVER: http://eureka-server:8761/eureka/
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - eureka-server
+      - api-gateway
+    network_mode: "host"
+
+  email-sender:
+    build:
+      context: ./Email-Sender-Service
+      dockerfile: Dockerfile
+    container_name: email-sender
+    ports:
+      - "8091:8091"
+    environment:
+      EUREKA_SERVER: http://eureka-server:8761/eureka/
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - rabbitmq
+      - api-gateway
+    network_mode: "host"
+
+networks:
+  app_network:
+    driver: bridge

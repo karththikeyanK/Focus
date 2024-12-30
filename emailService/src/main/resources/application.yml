@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: EMAIL-SERVICE
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: "eimskyruleengine@gmail.com"
+    password: "fcmq sfrj lkfb mria"
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: 8091
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
