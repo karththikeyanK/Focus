@@ -126,7 +126,7 @@ jobs:
   # Optional: Update dependency graph (if needed for all jobs)
   update-dependencies:
     runs-on: ubuntu-latest
-    needs: [eureka, gateway, focus]  
+    needs: [eureka, gateway, focus, email]  
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

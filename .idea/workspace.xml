@@ -5,45 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b921bb73-e75d-4aa4-9c77-00c81c7dfa0d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emailService/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emailService/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emailService/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emailService/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emailService/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emailService/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emailService/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emailService/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emailService/src/main/java/com/gingerx/emailservice/EmailServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emailService/src/main/java/com/gingerx/emailservice/controller/ExceptionHandlerController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emailService/src/main/java/com/gingerx/emailservice/controller/MailController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emailService/src/main/java/com/gingerx/emailservice/dto/MailDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emailService/src/main/java/com/gingerx/emailservice/exception/MailException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emailService/src/main/java/com/gingerx/emailservice/response/ApiResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emailService/src/main/java/com/gingerx/emailservice/service/MailService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emailService/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emailService/src/main/resources/banner.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emailService/src/test/java/com/gingerx/emailservice/EmailServiceApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emailService/wait-for-it.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eurekaServer/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/focusService/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/focusService/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/focusService/wait-for-it.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/src/main/java/com/org/gateway/config/WebConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/wait-for-it.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/cicd.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/cicd.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eurekaServer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eurekaServer/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/focusService/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/focusService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/focusService/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/org/gateway/config/CorsConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,34 +39,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.EurekaServerApplication.executor": "Run",
-    "Spring Boot.FocusServiceApplication.executor": "Run",
-    "Spring Boot.FocusV1Application.executor": "Run",
-    "Spring Boot.GatewayApplication.executor": "Run",
-    "git-widget-placeholder": "main",
-    "jdk.selected.JAVA_MODULE": "21",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/karththi/Documents/Personal/Focus/emailService/src/main/resources",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.38390803",
-    "run.configurations.included.in.services": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.EurekaServerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.FocusServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.FocusV1Application.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.GatewayApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;21&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/karththi/Documents/Personal/Focus/emailService/src/main/resources&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.38390803&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/emailService/src/main/resources" />
@@ -202,6 +164,7 @@
       <workItem from="1729834511867" duration="63000" />
       <workItem from="1735101917338" duration="488000" />
       <workItem from="1735449756411" duration="20779000" />
+      <workItem from="1735536156760" duration="2170000" />
     </task>
     <servers />
   </component>
