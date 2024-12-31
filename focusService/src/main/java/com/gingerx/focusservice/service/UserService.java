@@ -12,6 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 @Slf4j
@@ -72,5 +75,12 @@ public class UserService {
         UpdatedUuser.setPassword(user.getPassword());
         log.info("UserService::update()::Updating user completed");
         return UserDtoMapper.mapToResponse(user);
+    }
+
+    public List<UserResponse> getAll() {
+        log.info("UserService::getAll()::Fetching all users started");
+        List<User> users = userRepository.findAll();
+        log.info("UserService::getAll()::Fetching all users completed");
+        return users.stream().map(UserDtoMapper::mapToResponse).collect(Collectors.toList());
     }
 }
