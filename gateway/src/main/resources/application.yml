@@ -23,6 +23,13 @@ spring:
             - Path=/FOCUS-SERVICE/**
           filters:
             - RewritePath=/FOCUS-SERVICE/(?<remaining>.*), /$\{remaining}
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origin-patterns: "*"
+            allowedMethods: GET, POST, PUT, DELETE, OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: false
 
 eureka:
   client:
