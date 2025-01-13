@@ -1,4 +1,7 @@
 package com.gingerx.focusservice.exception;
 
-public class ApiClientException {
+public class ApiClientException extends RuntimeException{
+    public ApiClientException(String message) {
+        super(message);
+    }
 }

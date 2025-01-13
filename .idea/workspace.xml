@@ -5,7 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b921bb73-e75d-4aa4-9c77-00c81c7dfa0d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/apiClient/MailClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/config/KafkaConsumerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/config/KafkaProducerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/config/KafkaTopicConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/config/WebConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/strategy/mailTemplate/MailTemplateStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/strategy/mailTemplate/OtpMailTemplateStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/config/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,7 +174,9 @@
       <workItem from="1729834511867" duration="63000" />
       <workItem from="1735101917338" duration="488000" />
       <workItem from="1735449756411" duration="20779000" />
-      <workItem from="1735536156760" duration="4532000" />
+      <workItem from="1735536156760" duration="9931000" />
+      <workItem from="1735676224271" duration="2807000" />
+      <workItem from="1736587800479" duration="7201000" />
     </task>
     <servers />
   </component>
