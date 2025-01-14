@@ -5,22 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b921bb73-e75d-4aa4-9c77-00c81c7dfa0d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dto/KafkaMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dtoMapper/MailDtoMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/facade/RegistrationFacade.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/util/OtpGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/emailService/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/emailService/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/apiClient/MailClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/apiClient/MailClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/auth/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/auth/AuthenticationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/auth/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/auth/AuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/config/KafkaConsumerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/config/KafkaConsumerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/config/KafkaProducerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/config/KafkaProducerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dto/MailDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dto/MailDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/strategy/mailTemplate/OtpMailTemplateStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/strategy/mailTemplate/OtpMailTemplateStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/util/DurationUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/util/DurationUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/focusService/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,7 +167,7 @@
       <workItem from="1735536156760" duration="9931000" />
       <workItem from="1735676224271" duration="2807000" />
       <workItem from="1736587800479" duration="7201000" />
-      <workItem from="1736858196356" duration="15991000" />
+      <workItem from="1736858196356" duration="16300000" />
     </task>
     <servers />
   </component>
