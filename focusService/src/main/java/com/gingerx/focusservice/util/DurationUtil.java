@@ -4,6 +4,7 @@ import com.gingerx.focusservice.dto.DurationDto;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 
 @Service
 public class DurationUtil {
@@ -32,6 +33,10 @@ public class DurationUtil {
         long minutes = duration.toMinutes() % 60;
 
         return new DurationDto((int) days, (int) hours, (int) minutes);
+    }
+
+    public static LocalDateTime getFiveMinutesLater(LocalDateTime localDateTime) {
+        return localDateTime.plusMinutes(5);
     }
 
 

@@ -1,5 +1,8 @@
 package com.gingerx.focusservice.strategy.mailTemplate;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class OtpMailTemplateStrategy implements MailTemplateStrategy{
     @Override
     public String getOtpMailTemplate(String otpCode) {

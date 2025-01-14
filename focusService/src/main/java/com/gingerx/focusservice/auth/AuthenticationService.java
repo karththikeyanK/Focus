@@ -7,6 +7,7 @@ import com.gingerx.focusservice.dto.AuthenticationResponse;
 import com.gingerx.focusservice.dto.UserRequest;
 import com.gingerx.focusservice.entity.User;
 import com.gingerx.focusservice.exception.JwtAuthenticationException;
+import com.gingerx.focusservice.facade.RegistrationFacade;
 import com.gingerx.focusservice.repository.UserRepository;
 import com.gingerx.focusservice.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +27,12 @@ public class AuthenticationService {
   private final UserRepository repository;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
-  private final UserService userService;
+  private final RegistrationFacade registrationFacade;
 
   public AuthenticationResponse register(UserRequest userRequest) {
       try{
         log.info("AuthenticationService::Registering user started");
-        User user = userService.Register(userRequest);
+        User user = registrationFacade.registerUser(userRequest);
         log.info("AuthenticationService::Registering user completed");
         var jwtToken = jwtService.generateToken(new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>()));
         return AuthenticationResponse.builder()

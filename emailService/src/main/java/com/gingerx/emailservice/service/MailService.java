@@ -58,7 +58,7 @@ public class MailService {
             helper.setText(email.getMsgBody(), true);
 
             javaMailSender.send(mailMessage);
-            log.info("Email sent successfully: {}", email);
+            log.info("Email sent successfully..");
 
         } catch (Exception e) {
             log.warn("Error while sending email: {}", e.getMessage());
