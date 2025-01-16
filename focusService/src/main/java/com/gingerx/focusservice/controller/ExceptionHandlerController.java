@@ -59,4 +59,10 @@ public class ExceptionHandlerController {
         return ResponseEntity.badRequest().body(new ApiErrorResponse(ApiErrorResponse.ERROR, e.getMessage()));
     }
 
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ApiErrorResponse> handleAuthenticationException(AuthenticationException e){
+        log.error("ExceptionHandlerController: AuthenticationException: {}", e.getMessage());
+        return ResponseEntity.badRequest().body(new ApiErrorResponse(ApiErrorResponse.ERROR, e.getMessage()));
+    }
+
 }

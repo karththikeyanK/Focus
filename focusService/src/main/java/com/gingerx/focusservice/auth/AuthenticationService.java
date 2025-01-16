@@ -6,6 +6,8 @@ import com.gingerx.focusservice.dto.AuthenticationRequest;
 import com.gingerx.focusservice.dto.AuthenticationResponse;
 import com.gingerx.focusservice.dto.UserRequest;
 import com.gingerx.focusservice.entity.User;
+import com.gingerx.focusservice.enums.ActiveStatus;
+import com.gingerx.focusservice.exception.AuthenticationException;
 import com.gingerx.focusservice.exception.JwtAuthenticationException;
 import com.gingerx.focusservice.facade.RegistrationFacade;
 import com.gingerx.focusservice.repository.UserRepository;
@@ -34,9 +36,9 @@ public class AuthenticationService {
         log.info("AuthenticationService::Registering user started");
         User user = registrationFacade.registerUser(userRequest);
         log.info("AuthenticationService::Registering user completed");
-        var jwtToken = jwtService.generateToken(new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>()));
+//        var jwtToken = jwtService.generateToken(new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>()));
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .token(null)
                 .id(user.getId())
                 .build();
       }catch (Exception e){
@@ -60,6 +62,13 @@ public class AuthenticationService {
         }
 
         var user = repository.findByEmail(request.getEmail()).orElseThrow(()->new JwtAuthenticationException("User not found with email "+request.getEmail()));
+        if(user.getStatus().equals(ActiveStatus.PENDING.name())){
+            log.error("AuthenticationService::Authenticating user failed due to user status is pending");
+            throw new AuthenticationException("Verify your email to login");
+        }else if(user.getStatus().equals(ActiveStatus.INACTIVE.name())){
+            log.error("AuthenticationService::Authenticating user failed due to user status is inactive");
+            throw new AuthenticationException("User is Inactive, Please contact support");
+        }
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
         var jwtToken = jwtService.generateToken(userDetails);
         log.info("AuthenticationService::Authenticating user completed");
@@ -68,4 +77,6 @@ public class AuthenticationService {
                 .id(user.getId())
                 .build();
     }
+
+
 }

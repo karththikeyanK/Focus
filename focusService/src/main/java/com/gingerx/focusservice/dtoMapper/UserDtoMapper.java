@@ -30,4 +30,16 @@ public class UserDtoMapper {
                 .status(user.getStatus())
                 .build();
     }
+
+    public static UserRequest mapToRequest(User user) {
+        return UserRequest.builder()
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .vCode(user.getVCode())
+                .vCodeTime(user.getVCodeTime())
+                .status(user.getStatus())
+                .build();
+    }
 }

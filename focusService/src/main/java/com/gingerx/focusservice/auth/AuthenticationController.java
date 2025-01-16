@@ -3,13 +3,11 @@ package com.gingerx.focusservice.auth;
 import com.gingerx.focusservice.dto.AuthenticationRequest;
 import com.gingerx.focusservice.dto.AuthenticationResponse;
 import com.gingerx.focusservice.dto.UserRequest;
+import com.gingerx.focusservice.facade.RegistrationFacade;
 import com.gingerx.focusservice.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -17,14 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
   private final AuthenticationService authenticationService;
+  private final RegistrationFacade registrationFacade;
 
   @PostMapping("/register")
   public ResponseEntity<ApiResponse<AuthenticationResponse>> register(@RequestBody UserRequest request) {
-     try{
-       return ResponseEntity.ok().body(new ApiResponse<>(ApiResponse.SUCCESS, "User registered successfully", authenticationService.register(request)));
-     } catch (Exception e) {
-          return ResponseEntity.badRequest().body(new ApiResponse<AuthenticationResponse>(ApiResponse.ERROR, e.getMessage(), null));
-     }
+      return ResponseEntity.ok().body(new ApiResponse<>(ApiResponse.SUCCESS, "User registered successfully", authenticationService.register(request)));
   }
 
 
@@ -34,12 +29,18 @@ public class AuthenticationController {
 
   @PostMapping("/authenticate")
   public ResponseEntity<ApiResponse<AuthenticationResponse>> authenticate(@RequestBody AuthenticationRequest request) {
-      try{
-        return ResponseEntity.ok().body(new ApiResponse<AuthenticationResponse>(ApiResponse.SUCCESS, "User authenticated successfully", authenticationService.authenticate(request)));
-      } catch (Exception e) {
-        return ResponseEntity.badRequest().body(new ApiResponse<AuthenticationResponse>(ApiResponse.ERROR, e.getMessage(), null));
-      }
+      return ResponseEntity.ok().body(new ApiResponse<AuthenticationResponse>(ApiResponse.SUCCESS, "User authenticated successfully", authenticationService.authenticate(request)));
   }
+
+  @PostMapping("/verify-otp")
+  public ResponseEntity<ApiResponse<AuthenticationResponse>> verifyOtp(@RequestBody AuthenticationRequest request) {
+      return ResponseEntity.ok().body(new ApiResponse<AuthenticationResponse>(ApiResponse.SUCCESS, "OTP verified successfully", registrationFacade.verifyOtp(request)));
+  }
+
+  @GetMapping("/resend-otp")
+    public ResponseEntity<ApiResponse<AuthenticationResponse>> resendOtp(@RequestBody AuthenticationRequest request) {
+        return ResponseEntity.ok().body(new ApiResponse<AuthenticationResponse>(ApiResponse.SUCCESS, "OTP resent successfully", registrationFacade.resendOtp(request)));
+    }
 
 
 }

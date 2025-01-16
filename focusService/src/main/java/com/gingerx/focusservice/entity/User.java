@@ -39,6 +39,6 @@ public class User {
     @Column(name = "v_code_time")
     private LocalDateTime vCodeTime;
 
-    @Column(name = "status")
+    @Column(name = "status")   // PENDING, ACTIVE, INACTIVE
     private String status;
 }

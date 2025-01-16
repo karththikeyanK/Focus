@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b921bb73-e75d-4aa4-9c77-00c81c7dfa0d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emailService/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/emailService/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emailService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/emailService/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emailService/src/main/java/com/gingerx/emailservice/EmailServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/emailService/src/main/java/com/gingerx/emailservice/EmailServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emailService/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/emailService/src/main/resources/application.yml" afterDir="false" />
-    </list>
+    <list default="true" id="b921bb73-e75d-4aa4-9c77-00c81c7dfa0d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -171,7 +165,7 @@
       <workItem from="1735536156760" duration="9931000" />
       <workItem from="1735676224271" duration="2807000" />
       <workItem from="1736587800479" duration="7201000" />
-      <workItem from="1736858196356" duration="17625000" />
+      <workItem from="1736858196356" duration="17766000" />
     </task>
     <servers />
   </component>
