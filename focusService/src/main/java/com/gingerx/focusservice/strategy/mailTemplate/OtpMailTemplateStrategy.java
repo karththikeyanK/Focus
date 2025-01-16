@@ -60,8 +60,8 @@ public class OtpMailTemplateStrategy implements MailTemplateStrategy{
                 "        }\n" +
                 "        .otp-code {\n" +
                 "            display: inline-block;\n" +
-                "            background-color: #00466a;\n" +
-                "            color: #ffffff;\n" +
+                "            background-color: #349ed4;\n" +
+                "            color: #000000;\n" +
                 "            font-size: 24px;\n" +
                 "            padding: 10px 20px;\n" +
                 "            margin: 20px 0;\n" +
@@ -82,9 +82,6 @@ public class OtpMailTemplateStrategy implements MailTemplateStrategy{
                 "</head>\n" +
                 "<body>\n" +
                 "    <div class=\"email-container\">\n" +
-                "        <div class=\"header\">\n" +
-                "            <img src=\"https://example.com/logo.png\" alt=\"Focus by GingerX\">\n" +
-                "        </div>\n" +
                 "        <div class=\"content\">\n" +
                 "            <p>Dear User,</p>\n" +
                 "            <p>Thank you for choosing <strong>Focus</strong> by <strong>GingerX</strong>. To complete your sign-up process, please use the following One-Time Password (OTP). This OTP is valid for the next 5 minutes:</p>\n" +
