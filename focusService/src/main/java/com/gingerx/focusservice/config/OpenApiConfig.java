@@ -13,10 +13,11 @@ import java.util.List;
 
 @Configuration
 public class OpenApiConfig {
+
     @Value("${springdoc.openapi.dev-url}")
     private String devUrl;
 
-    @Value("${springdoc.api-docs.path}")
+    @Value("${springdoc.openapi.prod-url}")
     private String prodUrl;
 
     @Bean
@@ -40,7 +41,8 @@ public class OpenApiConfig {
                 .title("Focus Backend API")
                 .version("1.0")
                 .contact(contact)
-                .description("This API exposes endpoints to crelated Focus service.").termsOfService("https://www.gingerX.com")
+                .description("This API exposes endpoints related to the Focus service.")
+                .termsOfService("https://www.gingerX.com")
                 .license(mitLicense);
 
         return new OpenAPI().info(info).servers(List.of(devServer, prodServer));

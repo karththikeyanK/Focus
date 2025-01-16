@@ -22,7 +22,12 @@ public class SecurityConfiguration {
     http
             .csrf(CsrfConfigurer::disable)
             .authorizeRequests(authorize -> authorize
-                    .requestMatchers("/api/v1/auth/**","/swagger-ui/**","/v3/api-docs/").permitAll()
+                    .requestMatchers(
+                            "/api/v1/auth/**",
+                            "/swagger-ui.html",
+                            "/swagger-ui/**", // Add this for the new Swagger UI path
+                            "/api-docs/**"
+                    ).permitAll()
                     .anyRequest().authenticated())
             .sessionManagement(session -> session
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
