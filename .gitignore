@@ -1,0 +1,91 @@
+focus-firebase.json
+
+### 🔒 Secrets and Configs ###
+# Firebase credentials
+**/firebase*.json
+**/*.key
+**/*.p12
+**/*.cer
+
+# Environment variables
+.env
+*.env
+.env.local
+.env*.local
+
+# Application properties (override files)
+application-*.properties
+application-*.yml
+
+### 🏗️ Build and Dependency ###
+# Maven
+target/
+**/target/
+*.jar
+*.war
+*.ear
+*.zip
+
+# Gradle (if you switch later)
+.gradle/
+build/
+**/build/
+
+# Dependency directories
+**/lib/
+**/libs/
+
+### 🖥️ IDE ###
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse
+.settings/
+.project
+.classpath
+*.launch
+bin/
+
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+### 🐋 Docker ###
+docker-compose*.yml
+**/docker-compose*
+**/.dockerignore
+
+### 🗄️ Database ###
+# Local MySQL data
+*.db
+*.sql
+*.dump
+/data/
+
+### 📱 Mobile/Web ###
+# Frontend (if added later)
+node_modules/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+### 🛠️ OS and Editor ###
+# OS metadata
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Temp files
+*.log
+*.tmp
+*.bak
+*.orig
+*~

@@ -1,0 +1,37 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: API-GATEWAY
+  main:
+    web-application-type: reactive
+
+  cloud:
+    gateway:
+      routes:
+        - id: email-service
+          uri: lb://EMAIL-SERVICE
+          predicates:
+            - Path=/EMAIL-SERVICE/**
+          filters:
+            - RewritePath=/EMAIL-SERVICE/(?<remaining>.*), /$\{remaining}
+
+        - id: focus-service
+          uri: lb://FOCUS-SERVICE
+          predicates:
+            - Path=/FOCUS-SERVICE/**
+          filters:
+            - RewritePath=/FOCUS-SERVICE/(?<remaining>.*), /$\{remaining}
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origin-patterns: "*"
+            allowedMethods: GET, POST, PUT, DELETE, OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: false
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
