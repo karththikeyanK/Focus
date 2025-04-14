@@ -51,6 +51,6 @@ public class Approval {
 
         @ManyToOne
         @JoinColumn(name = "restricted_app_id")
-        private RestrictedApp restrictedApp;
+        private App app;
 
 }

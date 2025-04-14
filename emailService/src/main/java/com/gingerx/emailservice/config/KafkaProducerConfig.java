@@ -1,6 +1,6 @@
-package com.gingerx.focusservice.config;
+package com.gingerx.emailservice.config;
 
-import com.gingerx.focusservice.dto.KafkaMessage;
+import com.gingerx.emailservice.dto.KafkaMessage;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,12 +29,12 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public ProducerFactory<String, String> producerFactory() {
+    public ProducerFactory<String, KafkaMessage> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
     @Bean
-    public KafkaTemplate<String, String> kafkaTemplate() {
+    public KafkaTemplate<String, KafkaMessage> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }

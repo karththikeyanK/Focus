@@ -4,9 +4,9 @@ import com.gingerx.focusservice.dto.ApprovalRequest;
 import com.gingerx.focusservice.dto.ApprovalResponse;
 import com.gingerx.focusservice.dto.filter.ApprovalFilter;
 import com.gingerx.focusservice.dtoMapper.ApprovalDtoMapper;
+import com.gingerx.focusservice.entity.App;
 import com.gingerx.focusservice.entity.Approval;
 import com.gingerx.focusservice.entity.Approver;
-import com.gingerx.focusservice.entity.RestrictedApp;
 import com.gingerx.focusservice.entity.User;
 import com.gingerx.focusservice.enums.Status;
 import com.gingerx.focusservice.exception.DuplicationException;
@@ -31,7 +31,7 @@ public class ApprovalService {
     private final ApprovalRepository approvalRepository;
     private final EntityManager entityManager;
     private final UserService userService;
-    private final RestrictedAppService restrictedAppService;
+    private final AppService appService;
     private final ApproverService approverService;
 
     public ApprovalResponse create(ApprovalRequest approvalRequest){
@@ -42,10 +42,10 @@ public class ApprovalService {
                 "User", approvalRequest.getUserId()
         );
 
-        RestrictedApp restrictedApp = ServiceUtil.validateEntity(
-                restrictedAppService.existById(approvalRequest.getRestrictedAppId()),
-                () -> entityManager.getReference(RestrictedApp.class, approvalRequest.getRestrictedAppId()),
-                "RestrictedApp", approvalRequest.getRestrictedAppId()
+        App app = ServiceUtil.validateEntity(
+                appService.existById(approvalRequest.getRestrictedAppId()),
+                () -> entityManager.getReference(App.class, approvalRequest.getRestrictedAppId()),
+                "App", approvalRequest.getRestrictedAppId()
         );
 
         Approver approver = ServiceUtil.validateEntity(
@@ -54,11 +54,11 @@ public class ApprovalService {
                 "Approver", approvalRequest.getApproverId()
         );
         LocalDateTime scheduledEndTime = approvalRequest.getScheduledTime().plus(DurationUtil.convertToDuration(approvalRequest.getRequestDuration()));
-        if (!approvalRepository.findConflictingApprovalsByUserAndApp(restrictedApp, user,approvalRequest.getScheduledTime(),scheduledEndTime).isEmpty()){
+        if (!approvalRepository.findConflictingApprovalsByUserAndApp(app, user,approvalRequest.getScheduledTime(),scheduledEndTime).isEmpty()){
             log.error("ApprovalService::create()::Approval already exists for the user");
             throw new DuplicationException("Approval already exists for the user on this time");
         }
-        Approval approval = approvalRepository.save(ApprovalDtoMapper.mapToEntity(approvalRequest, user, approver, restrictedApp));
+        Approval approval = approvalRepository.save(ApprovalDtoMapper.mapToEntity(approvalRequest, user, approver, app));
         log.info("ApprovalService::create()::Approval created successfully");
         return ApprovalDtoMapper.mapToResponse(approval);
     }
@@ -73,10 +73,10 @@ public class ApprovalService {
                 "User", approvalRequest.getUserId()
         );
 
-        RestrictedApp restrictedApp = ServiceUtil.validateEntity(
-                restrictedAppService.existById(approvalRequest.getRestrictedAppId()),
-                () -> entityManager.getReference(RestrictedApp.class, approvalRequest.getRestrictedAppId()),
-                "RestrictedApp", approvalRequest.getRestrictedAppId()
+        App app = ServiceUtil.validateEntity(
+                appService.existById(approvalRequest.getRestrictedAppId()),
+                () -> entityManager.getReference(App.class, approvalRequest.getRestrictedAppId()),
+                "App", approvalRequest.getRestrictedAppId()
         );
 
         Approver approver = ServiceUtil.validateEntity(
@@ -85,11 +85,11 @@ public class ApprovalService {
                 "Approver", approvalRequest.getApproverId()
         );
         LocalDateTime scheduledEndTime = approvalRequest.getScheduledTime().plus(DurationUtil.convertToDuration(approvalRequest.getRequestDuration()));
-        if (!approvalRepository.findConflictingApprovalsByUserAndAppAndId(restrictedApp, user,approvalRequest.getScheduledTime(),scheduledEndTime,id).isEmpty()){
+        if (!approvalRepository.findConflictingApprovalsByUserAndAppAndId(app, user,approvalRequest.getScheduledTime(),scheduledEndTime,id).isEmpty()){
             log.error("ApprovalService::update()::Approval already exists for the user");
             throw new DuplicationException("Approval already exists for the user on this time");
         }
-        Approval updatedApproval = ApprovalDtoMapper.mapToEntity(approvalRequest, user, approver, restrictedApp);
+        Approval updatedApproval = ApprovalDtoMapper.mapToEntity(approvalRequest, user, approver, app);
         updatedApproval.setId(id);
         updatedApproval = approvalRepository.save(updatedApproval);
         log.info("ApprovalService::update()::Approval updated successfully with id: {}", id);

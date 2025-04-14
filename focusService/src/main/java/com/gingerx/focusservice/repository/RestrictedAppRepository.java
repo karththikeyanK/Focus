@@ -1,15 +1,16 @@
 package com.gingerx.focusservice.repository;
 
-import com.gingerx.focusservice.entity.RestrictedApp;
-import com.gingerx.focusservice.entity.User;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.gingerx.focusservice.entity.App;
+import com.gingerx.focusservice.entity.User;
 
 @Repository
-public interface RestrictedAppRepository extends JpaRepository<RestrictedApp, Long>{
+public interface RestrictedAppRepository extends JpaRepository<App, Long>{
     boolean existsByAppNameAndUser(String appName, User user);
 
-    List<RestrictedApp> findAllByUser(User user);
+    List<App> findAllByUser(User user);
 }

@@ -1,11 +1,16 @@
 package com.gingerx.focusservice.util;
 
+import java.util.Random;
+
 import org.springframework.stereotype.Component;
 
 @Component
 public class OtpGenerator {
+
     public static String generateOtp() {
-        int randomPin = (int) (Math.random() * 9000) + 1000;
-        return String.valueOf(randomPin);
+        Random random = new Random();
+        int otp = 100000 + random.nextInt(900000);
+        return String.valueOf(otp);
     }
+
 }

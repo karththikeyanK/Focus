@@ -31,3 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
+focusService/src/main/resources/focus-firebase.json

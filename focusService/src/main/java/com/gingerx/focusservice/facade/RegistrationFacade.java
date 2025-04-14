@@ -1,5 +1,7 @@
 package com.gingerx.focusservice.facade;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gingerx.focusservice.dto.*;
 import com.gingerx.focusservice.dtoMapper.UserDtoMapper;
 import com.gingerx.focusservice.entity.User;
@@ -22,8 +24,9 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class RegistrationFacade {
     private final UserService userService;
-    private final KafkaTemplate<String, KafkaMessage> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
     private final OtpMailTemplateStrategy otpMailTemplateStrategy;
+    private final ObjectMapper objectMapper;
 
     @Transactional
     public User registerUser(UserRequest userRequest) {
@@ -46,7 +49,13 @@ public class RegistrationFacade {
                 .payload(mailDto)
                 .build();
 
-        kafkaTemplate.send("send-email", message);
+        try {
+            String jsonMessage = objectMapper.writeValueAsString(message);
+            kafkaTemplate.send("send-email", jsonMessage);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
 
         log.info("RegistrationFacade::Registering user completed");
         return user;
@@ -114,7 +123,12 @@ public class RegistrationFacade {
                 .payload(mailDto)
                 .build();
 
-        kafkaTemplate.send("send-email", message);
+        try {
+            String jsonMessage = objectMapper.writeValueAsString(message);
+            kafkaTemplate.send("send-email", jsonMessage);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
 
         log.info("RegistrationFacade::resendOtp()::Resending OTP completed");
         return AuthenticationResponse.builder()
