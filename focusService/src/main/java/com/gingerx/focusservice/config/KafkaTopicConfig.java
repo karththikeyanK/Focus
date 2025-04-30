@@ -11,4 +11,10 @@ public class KafkaTopicConfig {
     public NewTopic sendEmailTopic() {
         return new NewTopic("send-email", 1, (short) 1);
     }
+
+    @Bean
+    public NewTopic sendPushNotificationTopic() {
+        return new NewTopic("send-push-notification", 1, (short) 1);
+    }
+
 }
