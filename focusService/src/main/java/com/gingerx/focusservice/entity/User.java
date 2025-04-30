@@ -41,4 +41,8 @@ public class User {
 
     @Column(name = "status")   // PENDING, ACTIVE, INACTIVE
     private String status;
+
+    @Column(name = "firebase_token", length = 512)
+    private String firebaseToken;
+
 }

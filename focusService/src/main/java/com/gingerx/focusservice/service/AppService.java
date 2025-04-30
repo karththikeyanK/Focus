@@ -105,4 +105,11 @@ public class AppService {
         log.info("AppService::existById():: isExist with id: {} is: {}", id, isExist);
         return isExist;
     }
+
+    public boolean existByUserIdAndAppId(Long userId, String appId){
+        log.info("AppService::existByUserIdAndAppId():: is called with userId: {} and appId: {}", userId, appId);
+        boolean isExist = restrictedAppRepository.existsByUserIdAndAppId(userId, appId);
+        log.info("AppService::existByUserIdAndAppId():: isExist with userId: {} and appId: {} is: {}", userId, appId, isExist);
+        return isExist;
+    }
 }

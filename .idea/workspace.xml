@@ -4,7 +4,36 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b921bb73-e75d-4aa4-9c77-00c81c7dfa0d" name="Changes" comment="" />
+    <list default="true" id="b921bb73-e75d-4aa4-9c77-00c81c7dfa0d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dto/ApproverDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/exception/VerificationException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/facade/ApproverFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/config/KafkaTopicConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/config/KafkaTopicConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/controller/ApproverController.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/controller/ApproverController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/controller/ExceptionHandlerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/controller/ExceptionHandlerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dto/ApproverRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dto/ApproverRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dto/ApproverResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dto/ApproverResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dto/RestrictedAppRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dto/RestrictedAppResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dto/UserRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dto/UserRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dto/UserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dto/UserResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dtoMapper/ApproverDtoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dtoMapper/ApproverDtoMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dtoMapper/RestrictedAppDtoMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dtoMapper/UserDtoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dtoMapper/UserDtoMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/entity/Approver.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/entity/Approver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/entity/RestrictedApp.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/facade/AppFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/facade/AppFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/repository/ApproverRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/repository/ApproverRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/repository/RestrictedAppRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/repository/RestrictedAppRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/service/AppService.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/service/AppService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/service/ApproverService.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/service/ApproverService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/service/FCMService.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/service/FCMService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/service/RestrictedAppService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/service/UserService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -166,6 +195,14 @@
       <workItem from="1735676224271" duration="2807000" />
       <workItem from="1736587800479" duration="7201000" />
       <workItem from="1736858196356" duration="17766000" />
+      <workItem from="1744654275721" duration="3978000" />
+      <workItem from="1744828525948" duration="7793000" />
+      <workItem from="1744913215148" duration="6875000" />
+      <workItem from="1744959221402" duration="1116000" />
+      <workItem from="1744966751982" duration="572000" />
+      <workItem from="1745738288058" duration="1558000" />
+      <workItem from="1745987891333" duration="1583000" />
+      <workItem from="1746023124339" duration="463000" />
     </task>
     <servers />
   </component>

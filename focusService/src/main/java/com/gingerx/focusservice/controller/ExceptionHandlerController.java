@@ -65,4 +65,10 @@ public class ExceptionHandlerController {
         return ResponseEntity.badRequest().body(new ApiErrorResponse(ApiErrorResponse.ERROR, e.getMessage()));
     }
 
+    @ExceptionHandler(VerificationException.class)
+    public ResponseEntity<ApiErrorResponse> handleExpiredDataException(VerificationException e){
+        log.error("ExceptionHandlerController: VerificationException: {}", e.getMessage());
+        return ResponseEntity.badRequest().body(new ApiErrorResponse(ApiErrorResponse.ERROR, e.getMessage()));
+    }
+
 }

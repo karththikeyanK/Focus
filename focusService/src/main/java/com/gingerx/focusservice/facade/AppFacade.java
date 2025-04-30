@@ -17,9 +17,16 @@ public class AppFacade {
     public void addApps(List<AppRequest> appRequests) {
        log.info("AppFace::addApps():: is called");
        for (AppRequest appRequest : appRequests) {
-           appRequest.setStatus("ALLOWED");
-           appService.create(appRequest);
+          if (appService.existByUserIdAndAppId(appRequest.getUserId(), appRequest.getAppId())) {
+             log.error("AppFace::addApps():: App already exists for the user with appName: {}", appRequest.getAppName());
+          }else {
+                appService.create(appRequest);
+                log.info("AppFace::addApps():: App created successfully with name: {}", appRequest.getAppName());
+          }
        }
        log.info("AppFace::addApps():: is finished");
     }
+
+
+
 }

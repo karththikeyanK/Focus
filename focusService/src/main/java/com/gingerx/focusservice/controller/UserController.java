@@ -25,4 +25,9 @@ public class UserController {
     public ResponseEntity<ApiResponse<List<UserResponse>>> getAll() {
         return ResponseEntity.ok(new ApiResponse<>(ApiResponse.SUCCESS, "Users retrieved successfully", userService.getAll()));
     }
+
+    @PostMapping("/update-firebase-token/{id}")
+    public ResponseEntity<ApiResponse<UserResponse>> updateFirebaseToken(@PathVariable Long id, @RequestParam String firebaseToken) {
+        return ResponseEntity.ok(new ApiResponse<>(ApiResponse.SUCCESS, "Firebase token updated successfully", userService.updateFirebaseToken(id, firebaseToken)));
+    }
 }

@@ -15,4 +15,5 @@ public class UserResponse {
     private String lastName;
     private String email;
     private String status;
+    private String firebaseToken;
 }

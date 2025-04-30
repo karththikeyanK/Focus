@@ -19,4 +19,5 @@ public class UserRequest {
     private String vCode;
     private LocalDateTime vCodeTime;
     private String status;
+    private String firebaseToken;
 }

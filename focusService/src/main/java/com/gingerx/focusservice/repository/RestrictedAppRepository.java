@@ -13,4 +13,6 @@ public interface RestrictedAppRepository extends JpaRepository<App, Long>{
     boolean existsByAppNameAndUser(String appName, User user);
 
     List<App> findAllByUser(User user);
+
+    boolean existsByUserIdAndAppId(Long userId, String appId);
 }

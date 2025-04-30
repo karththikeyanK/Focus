@@ -18,6 +18,7 @@ public class UserDtoMapper {
                 .vCode(userRequest.getVCode())
                 .vCodeTime(userRequest.getVCodeTime())
                 .status(userRequest.getStatus())
+                .firebaseToken(userRequest.getFirebaseToken())
                 .build();
     }
 
@@ -28,6 +29,7 @@ public class UserDtoMapper {
                 .lastName(user.getLastName())
                 .email(user.getEmail())
                 .status(user.getStatus())
+                .firebaseToken(user.getFirebaseToken())
                 .build();
     }
 
@@ -40,6 +42,7 @@ public class UserDtoMapper {
                 .vCode(user.getVCode())
                 .vCodeTime(user.getVCodeTime())
                 .status(user.getStatus())
+                .firebaseToken(user.getFirebaseToken())
                 .build();
     }
 }

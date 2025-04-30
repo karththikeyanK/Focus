@@ -7,6 +7,8 @@ import com.gingerx.focusservice.entity.User;
 import com.gingerx.focusservice.enums.ActiveStatus;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class ApproverDtoMapper {
 
@@ -15,6 +17,9 @@ public class ApproverDtoMapper {
                 .user(user)
                 .approver(approver)
                 .status(ActiveStatus.valueOf(approverRequest.getStatus()))
+                .vCode(approverRequest.getVCode())
+                .vCodeTime(approverRequest.getVCodeTime() != null ? LocalDateTime.parse(approverRequest.getVCodeTime()) : null)
+                .deviceName(approverRequest.getDeviceName())
                 .build();
     }
 
@@ -24,6 +29,20 @@ public class ApproverDtoMapper {
                 .userId(approver.getUser().getId())
                 .approverId(approver.getApprover().getId())
                 .status(approver.getStatus().name())
+                .vCode(approver.getVCode())
+                .vCodeTime(approver.getVCodeTime() != null ? approver.getVCodeTime().toString() : null)
+                .deviceName(approver.getDeviceName())
+                .build();
+    }
+
+    public static ApproverRequest mapToRequest(ApproverResponse approverResponse) {
+        return ApproverRequest.builder()
+                .userId(approverResponse.getUserId())
+                .approverId(approverResponse.getApproverId())
+                .status(approverResponse.getStatus())
+                .vCode(approverResponse.getVCode())
+                .vCodeTime(approverResponse.getVCodeTime())
+                .deviceName(approverResponse.getDeviceName())
                 .build();
     }
 }

@@ -62,7 +62,11 @@ public class UserService {
     public boolean existById(Long id) {
         log.info("UserService::existById()::Checking user existence by id started");
         return userRepository.existsById(id);
+    }
 
+    public boolean existsByEmail(String email) {
+        log.info("UserService::existsByEmail()::Checking user existence by email started");
+        return userRepository.existsByEmail(email);
     }
 
     public UserResponse update(Long id, UserRequest userRequest) {
@@ -92,5 +96,14 @@ public class UserService {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new DataNotFoundException("User not found with email: " + email));
         log.info("UserService::findByEmail()::Fetching user by email completed");
         return user;
+    }
+
+    public UserResponse updateFirebaseToken(Long id, String firebaseToken) {
+        log.info("UserService::updateFirebaseToken()::Updating user firebase token started with token: " + firebaseToken);
+        User user = userRepository.findById(id).orElseThrow(() -> new DataNotFoundException("User not found with id: " + id));
+        user.setFirebaseToken(firebaseToken);
+        user = userRepository.save(user);
+        log.info("UserService::updateFirebaseToken()::Updating user firebase token completed");
+        return UserDtoMapper.mapToResponse(user);
     }
 }
