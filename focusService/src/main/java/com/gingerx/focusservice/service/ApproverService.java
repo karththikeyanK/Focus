@@ -5,6 +5,7 @@ import com.gingerx.focusservice.dto.ApproverResponse;
 import com.gingerx.focusservice.dtoMapper.ApproverDtoMapper;
 import com.gingerx.focusservice.entity.Approver;
 import com.gingerx.focusservice.entity.User;
+import com.gingerx.focusservice.exception.DataNotFoundException;
 import com.gingerx.focusservice.exception.DuplicationException;
 import com.gingerx.focusservice.repository.ApproverRepository;
 import com.gingerx.focusservice.util.ServiceUtil;
@@ -128,8 +129,15 @@ public class ApproverService {
     public ApproverResponse getApproverById(Long id){
         log.info("ApproverService::getApproverById:: is start with id: {}", id);
         Approver approver = approverRepository.findById(id)
-                .orElseThrow(() -> new DuplicationException("Approver not found with id: "+id));
+                .orElseThrow(() -> new DataNotFoundException("Approver not found with id: "+id));
         log.info("ApproverService::getApproverById:: is end with id: {}", id);
+        return ApproverDtoMapper.mapToResponse(approver);
+    }
+
+    public ApproverResponse getApproverByApproverId(Long userId) {
+        log.info("ApproverService::getApproverByApproverId:: is start with userId: {}", userId);
+        Approver approver = approverRepository.findByApproverUserId(userId).orElseThrow(() -> new DataNotFoundException("Approver not found with approver id: "+userId));
+        log.info("ApproverService::getApproverByApproverId:: is end with userId: {}", userId);
         return ApproverDtoMapper.mapToResponse(approver);
     }
 

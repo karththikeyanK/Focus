@@ -26,7 +26,8 @@ public class SecurityConfiguration {
                             "/api/v1/auth/**",
                             "/swagger-ui.html",
                             "/swagger-ui/**", // Add this for the new Swagger UI path
-                            "/api-docs/**"
+                            "/api-docs/**",
+                            "/uploads/**"
                     ).permitAll()
                     .anyRequest().authenticated())
             .sessionManagement(session -> session

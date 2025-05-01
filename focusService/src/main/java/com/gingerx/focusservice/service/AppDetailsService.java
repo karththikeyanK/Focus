@@ -27,8 +27,9 @@ public class AppDetailsService {
             throw new DuplicationException("AppDetail already exists with appName: " + appDetailRequest.getAppName());
         }
         AppDetail appDetail = AppDetailDtoMapper.mapToEntity(appDetailRequest);
+        appDetail = appDetailRepository.save(appDetail);
         log.info("AppDetailsService::createAppDetail():: AppDetail created successfully with name: {}", appDetail.getAppName());
-        return AppDetailDtoMapper.mapToResponse(appDetailRepository.save(appDetail));
+        return AppDetailDtoMapper.mapToResponse(appDetail);
     }
 
 
@@ -41,9 +42,13 @@ public class AppDetailsService {
     }
 
     public AppDetailResponse getAppDetailByAppId(String appId) {
-        log.info("AppDetailsService::getAppDetail():: is called with id: {}", appId);
+        log.info("AppDetailsService::getAppDetailByAppId():: is called with id: {}", appId);
         AppDetail appDetail = appDetailRepository.findByAppId(appId)
                 .orElse(null);
+        if (appDetail == null) {
+            log.error("AppDetailsService::getAppDetailByAppId():: AppDetail not found with appId: {}", appId);
+            return null;
+        }
         log.info("AppDetailsService::getAppDetailByAppId()::AppDetail retrieved successfully with name: {}", appDetail.getAppName());
         return AppDetailDtoMapper.mapToResponse(appDetail);
     }

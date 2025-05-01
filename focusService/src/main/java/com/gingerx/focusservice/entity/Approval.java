@@ -53,4 +53,11 @@ public class Approval {
         @JoinColumn(name = "restricted_app_id")
         private App app;
 
+        @PrePersist
+        public void prePersist() {
+            this.createdAt = LocalDateTime.now();
+            this.updatedAt = LocalDateTime.now();
+            this.status = Status.PENDING;
+        }
+
 }

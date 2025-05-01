@@ -38,7 +38,7 @@ public class AppService {
                 () -> entityManager.getReference(AppDetail.class, appRequest.getAppDetailId()),
                 "AppDetail", appRequest.getAppDetailId());
 
-        if (restrictedAppRepository.existByAppDetailIdAndUserId(appRequest.getAppDetailId(), appRequest.getUserId())){
+        if (restrictedAppRepository.existsByAppDetailIdAndUserId(appRequest.getAppDetailId(), appRequest.getUserId())){
             log.error("AppService::create()::App already exists for the user id: {} ", appRequest.getUserId());
             throw new ResourceNotFoundException("Restricted app already exists for the user");
         }
@@ -63,7 +63,7 @@ public class AppService {
                 appDetailsService.isExistById(appRequest.getAppDetailId() ),
                 () -> entityManager.getReference(AppDetail.class, appRequest.getAppDetailId()),
                 "AppDetail", appRequest.getAppDetailId());
-        if (restrictedAppRepository.existByAppDetailIdAndUserId(appRequest.getAppDetailId(), appRequest.getUserId()) && !appRequest.getAppDetailId().equals(app.getAppDetail().getId())){
+        if (restrictedAppRepository.existsByAppDetailIdAndUserId(appRequest.getAppDetailId(), appRequest.getUserId()) && !appRequest.getAppDetailId().equals(app.getAppDetail().getId())){
             log.error("AppService::update():: App already exists for the user with user id {}", appRequest.getUserId());
             throw new ResourceNotFoundException("Restricted app already exists for the user");
         }

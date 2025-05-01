@@ -46,4 +46,11 @@ public class Approver {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.status = ActiveStatus.PENDING;
+    }
+
 }

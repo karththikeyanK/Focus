@@ -7,6 +7,7 @@ import com.gingerx.focusservice.facade.ApproverFacade;
 import com.gingerx.focusservice.response.ApiResponse;
 import com.gingerx.focusservice.service.ApproverService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

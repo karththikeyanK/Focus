@@ -12,6 +12,5 @@ public class AppDetailRequest {
     private String appName;
     private String appId;
     private String appImageUrl;
-    private MultipartFile appImage;
-
+    private String appImage;
 }

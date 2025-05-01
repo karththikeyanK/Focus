@@ -73,6 +73,8 @@ services:
         condition: service_healthy
     networks:
       - app_network
+    volumes:
+      - upload_data:/uploads
 
   zookeeper:
     image: wurstmeister/zookeeper
@@ -121,6 +123,7 @@ services:
 
 volumes:
   mysql_data:
+  upload_data:
 
 networks:
   app_network:

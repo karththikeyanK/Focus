@@ -13,6 +13,7 @@ import com.gingerx.focusservice.util.ImageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,15 +33,23 @@ public class AppFacade {
      * Then it checks if the app already exists for the user.
      * If it does not exist, it creates a new app.
      */
+    @Transactional
     public void addApps(List<AppAndDetailRequest> appAndDetailRequestList) {
-       log.info("AppFace::addApps():: is called");
+       log.info("AppFace::addApps():: is called with size: {}", appAndDetailRequestList.size());
        for (AppAndDetailRequest appAndDetailRequest : appAndDetailRequestList) {
            AppDetailResponse appDetailResponse =appDetailsService.getAppDetailByAppId(appAndDetailRequest.getAppDetailRequest().getAppId());
            if (appDetailResponse == null) {
                log.info("AppFace::addApps():: AppDetail not found, creating new AppDetail for appId: {}", appAndDetailRequest.getAppDetailRequest().getAppId());
                AppDetailRequest appDetailRequest = appAndDetailRequest.getAppDetailRequest();
-               String appImageUrl = ImageUtil.saveImage(appDetailRequest.getAppImage(),
+               String image = appDetailRequest.getAppImage();
+               if (image == null || image.isEmpty()) {
+                   log.info("AppFace::addApps():: AppImage is null or empty");
+                   throw new DataNotFoundException("AppImage is null or empty");
+               }
+               byte[] appImage = ImageUtil.decodeBase64Image(image);
+               String appImageUrl = ImageUtil.saveImage(appImage,
                        appDetailRequest.getAppId());
+               log.info("AppFace::addApps():: AppImageUrl: {}", appImageUrl);
                appDetailRequest.setAppImageUrl(appImageUrl);
                appDetailResponse = appDetailsService.createAppDetail(appDetailRequest);
            }

@@ -63,27 +63,31 @@ public class RegistrationFacade {
 
     public AuthenticationResponse verifyOtp(AuthenticationRequest request) {
         log.info("RegistrationFacade::verifyOtp()::Verifying OTP started");
+
         User user = userService.findByEmail(request.getEmail());
         if (user == null) {
-            log.error("RegistrationFacade::verifyOtp()::User not found");
             throw new AuthenticationException("User not found");
         }
-        if (user.getVCode().isEmpty() || user.getVCodeTime() == null) {
-            log.error("RegistrationFacade::verifyOtp()::OTP not found");
-            throw new AuthenticationException("OTP not found.Please request for OTP again");
+
+        if (ActiveStatus.ACTIVE.name().equals(user.getStatus())) {
+            throw new AuthenticationException("User already active");
+        }
+
+        if (user.getVCode() == null || user.getVCode().isEmpty() || user.getVCodeTime() == null) {
+            throw new AuthenticationException("OTP not found. Please request for OTP again");
         }
         if (!user.getVCode().equals(request.getOtp())) {
-            log.error("RegistrationFacade::verifyOtp()::Invalid OTP");
             throw new AuthenticationException("Invalid OTP");
         }
         if (user.getVCodeTime().isBefore(LocalDateTime.now())) {
-            log.error("RegistrationFacade::verifyOtp()::OTP expired");
             throw new AuthenticationException("OTP expired");
         }
+
         user.setStatus(ActiveStatus.ACTIVE.name());
         user.setVCode(null);
         user.setVCodeTime(null);
         userService.update(user.getId(), UserDtoMapper.mapToRequest(user));
+
         log.info("RegistrationFacade::verifyOtp()::OTP verified successfully");
         return AuthenticationResponse.builder()
                 .token(null)

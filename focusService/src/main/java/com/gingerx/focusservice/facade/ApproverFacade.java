@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -108,6 +109,19 @@ public class ApproverFacade {
         } else {
             log.error("AppFace::confirmApprover():: VCode is not valid");
             throw new VerificationException("VCode is not valid");
+        }
+        UserResponse user = userService.getUserById(approverResponse.getUserId());
+        NotificationDto notificationDto = new NotificationDto();
+        notificationDto.setTitle("Approve Request Confirmed");
+        notificationDto.setBody("Your Approve Request has been confirmed by " + approverResponse.getApproverName());
+        notificationDto.setRecipientToken(user.getFirebaseToken());
+        notificationDto.setData(Map.of("approverId", approverResponse.getId().toString()));
+        try {
+            String jsonString = objectMapper.writeValueAsString(notificationDto);
+            kafkaTemplate.send("send-push-notification", jsonString);
+            log.info("AppFace::confirmApprover():: Approver is sent to Kafka");
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
         log.info("AppFace::confirmApprover():: is finished");
         return approverResponse;

@@ -24,7 +24,7 @@ public class App {
         @Column(name = "status")  // RESTRICTED, ALLOWED
         private String status;
 
-        @OneToOne
+        @ManyToOne
         @JoinColumn(name = "user_id")
         private User user;
 

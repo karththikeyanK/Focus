@@ -10,7 +10,7 @@ import com.gingerx.focusservice.entity.User;
 
 @Repository
 public interface RestrictedAppRepository extends JpaRepository<App, Long>{
-    boolean existByAppDetailIdAndUserId(Long appDetailId, Long userId);
+    boolean existsByAppDetailIdAndUserId(Long appDetailId, Long userId);
     List<App> findAllByUser(User user);
 
     boolean existsByUserIdAndAppDetailId(Long userId, Long appDetailId);
