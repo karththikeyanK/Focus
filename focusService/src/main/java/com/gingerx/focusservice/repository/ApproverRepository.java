@@ -33,4 +33,6 @@ public interface ApproverRepository extends JpaRepository<Approver, Long> {
     @Query("SELECT a FROM Approver a WHERE a.user.id = :userId AND a.approver.email = :email")
     Optional<Approver> findByUser_IdAndApprover_Email(Long userId, String email);
 
+    @Query("SELECT a FROM Approver a WHERE a.user.id = :userId AND a.approver.id = :approverId")
+    Optional<Approver> findByUser_IdAndApprover_Id(Long userId, Long approverId);
 }

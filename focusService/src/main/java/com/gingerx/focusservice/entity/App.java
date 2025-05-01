@@ -21,17 +21,15 @@ public class App {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
-        @Column(name = "app_name")
-        private String appName;
-
-        @Column(name = "app_id")
-        private String appId;
-
         @Column(name = "status")  // RESTRICTED, ALLOWED
         private String status;
 
         @OneToOne
         @JoinColumn(name = "user_id")
         private User user;
+
+        @ManyToOne
+        @JoinColumn(name = "app_id")
+        private AppDetail appDetail;
 
 }

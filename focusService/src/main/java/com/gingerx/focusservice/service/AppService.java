@@ -4,6 +4,7 @@ import com.gingerx.focusservice.dto.AppRequest;
 import com.gingerx.focusservice.dto.AppResponse;
 import com.gingerx.focusservice.dtoMapper.AppDtoMapper;
 import com.gingerx.focusservice.entity.App;
+import com.gingerx.focusservice.entity.AppDetail;
 import com.gingerx.focusservice.entity.User;
 import com.gingerx.focusservice.exception.ResourceNotFoundException;
 import com.gingerx.focusservice.repository.RestrictedAppRepository;
@@ -23,20 +24,26 @@ public class AppService {
     private final RestrictedAppRepository restrictedAppRepository;
     private final EntityManager entityManager;
     private final UserService userService;
+    private final AppDetailsService appDetailsService;
 
     public AppResponse create(AppRequest appRequest){
-        log.info("AppService::create():: is called with appName: {}", appRequest.getAppName());
+        log.info("AppService::create():: is called with user id: {}", appRequest.getUserId());
         User user = ServiceUtil.validateEntity(
                 userService.existById(appRequest.getUserId()),
                 () -> entityManager.getReference(User.class, appRequest.getUserId()),
                 "User", appRequest.getUserId());
 
-        if (restrictedAppRepository.existsByAppNameAndUser(appRequest.getAppName(), user)){
-            log.error("AppService::create()::Restricted app already exists for the user with appName: {}", appRequest.getAppName());
+        AppDetail appDetail = ServiceUtil.validateEntity(
+                appDetailsService.isExistById(appRequest.getAppDetailId() ),
+                () -> entityManager.getReference(AppDetail.class, appRequest.getAppDetailId()),
+                "AppDetail", appRequest.getAppDetailId());
+
+        if (restrictedAppRepository.existByAppDetailIdAndUserId(appRequest.getAppDetailId(), appRequest.getUserId())){
+            log.error("AppService::create()::App already exists for the user id: {} ", appRequest.getUserId());
             throw new ResourceNotFoundException("Restricted app already exists for the user");
         }
-        App app = restrictedAppRepository.save(AppDtoMapper.mapToEntity(appRequest, user));
-        log.info("AppService::create():: App created successfully with name: {}", app.getAppName());
+        App app = restrictedAppRepository.save(AppDtoMapper.mapToEntity(appRequest, user,appDetail));
+        log.info("AppService::create():: App created successfully with id: {}", app.getId());
         return AppDtoMapper.mapToResponse(app);
     }
 
@@ -52,15 +59,18 @@ public class AppService {
                 () -> entityManager.getReference(User.class, appRequest.getUserId()),
                 "User", appRequest.getUserId());
 
-        if (restrictedAppRepository.existsByAppNameAndUser(appRequest.getAppName(), user) && !app.getAppName().equals(appRequest.getAppName())){
-            log.error("AppService::update()::Restricted app already exists for the user with appName: {}", appRequest.getAppName());
+        AppDetail appDetail = ServiceUtil.validateEntity(
+                appDetailsService.isExistById(appRequest.getAppDetailId() ),
+                () -> entityManager.getReference(AppDetail.class, appRequest.getAppDetailId()),
+                "AppDetail", appRequest.getAppDetailId());
+        if (restrictedAppRepository.existByAppDetailIdAndUserId(appRequest.getAppDetailId(), appRequest.getUserId()) && !appRequest.getAppDetailId().equals(app.getAppDetail().getId())){
+            log.error("AppService::update():: App already exists for the user with user id {}", appRequest.getUserId());
             throw new ResourceNotFoundException("Restricted app already exists for the user");
         }
-        App updatedApp = AppDtoMapper.mapToEntity(appRequest, user);
-        updatedApp.setId(id);
-        updatedApp = restrictedAppRepository.save(updatedApp);
-        log.info("AppService::update():: App updated successfully with id: {}", id);
-        return AppDtoMapper.mapToResponse(updatedApp);
+        App updatedApp = AppDtoMapper.mapToEntity(appRequest, user, appDetail);
+        updatedApp.setId(app.getId());
+        log.info("AppService::update():: App updated successfully with id: {}", app.getId());
+        return AppDtoMapper.mapToResponse(restrictedAppRepository.save(updatedApp));
     }
 
     public List<AppResponse> getAllRestrictedAppsByUserId(Long userId){
@@ -106,10 +116,25 @@ public class AppService {
         return isExist;
     }
 
-    public boolean existByUserIdAndAppId(Long userId, String appId){
-        log.info("AppService::existByUserIdAndAppId():: is called with userId: {} and appId: {}", userId, appId);
-        boolean isExist = restrictedAppRepository.existsByUserIdAndAppId(userId, appId);
-        log.info("AppService::existByUserIdAndAppId():: isExist with userId: {} and appId: {} is: {}", userId, appId, isExist);
+    public boolean existByUserIdAndAppId(Long userId, Long appDetailId){
+        log.info("AppService::existByUserIdAndAppId():: is called with userId: {} and appDetailId: {}", userId, appDetailId);
+        boolean isExist = restrictedAppRepository.existsByUserIdAndAppDetailId(userId, appDetailId);
+        log.info("AppService::existByUserIdAndAppId():: isExist with userId: {} and appDetailId: {} is: {}", userId, appDetailId, isExist);
         return isExist;
+    }
+
+    public List<App> getAllAppsByUserId(Long userId){
+        log.info("AppService::getAllAppsByUserId():: is called with userId: {}", userId);
+        User user = ServiceUtil.validateEntity(
+                userService.existById(userId),
+                () -> entityManager.getReference(User.class, userId),
+                "User", userId);
+        List<App> apps = restrictedAppRepository.findAllByUser(user);
+        if (apps.isEmpty()){
+            log.error("AppService::getAllAppsByUserId():: Apps not found for userId: {}", userId);
+            throw new ResourceNotFoundException("Apps not found for userId: " + userId);
+        }
+        log.info("AppService::getAllAppsByUserId():: Apps found for userId: {} are: {}", userId, apps.size());
+        return apps;
     }
 }

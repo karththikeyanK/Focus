@@ -13,5 +13,5 @@ public class ApproverDto {
     private String email;
     private String vCode;
     private String deviceName;
-    private List<AppRequest> apps;
+    private List<AppAndDetailRequest> apps;
 }

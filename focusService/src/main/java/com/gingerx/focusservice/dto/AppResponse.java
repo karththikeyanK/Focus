@@ -12,8 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AppResponse {
     private Long id;
-    private String appName;
-    private String appId;
+    private String appDetailId;
     private String status;  // RESTRICTED, ALLOWED
     private Long userId;
 }

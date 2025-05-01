@@ -1,16 +1,17 @@
 package com.gingerx.focusservice.dto;
 
-
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AppRequest {
-    private Long appDetailId;
-    private String status;  // RESTRICTED, ALLOWED
-    private Long userId;
-
+@Builder
+public class AppDetailResponse {
+    private Long id;
+    private String appName;
+    private String appId;
+    private String appImageUrl;
 }

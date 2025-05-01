@@ -28,6 +28,7 @@ public class ApproverFacade {
     private final UserService userService;
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
+    private final AppFacade appFacade;
 
     public ApproverResponse addApprover(Long id, ApproverDto approverDto) {
         log.info("AppFace::addApprover():: is called");
@@ -45,7 +46,7 @@ public class ApproverFacade {
         String title, body;
         ApproverResponse existingApprover = approverService.getApproverByUserIdAndApproverMail(user.getId(), mail);
         if(existingApprover != null && existingApprover.getStatus().equals(ActiveStatus.PENDING.name())) {
-            log.warn("AppFace::addApprover():: Approver already exists & device name is "+ approverDto.getDeviceName());
+            log.warn("AppFace::addApprover():: Approver already exists & device name is {}", approverDto.getDeviceName());
             existingApprover.setVCode(vCode);
             existingApprover.setVCodeTime(LocalDateTime.now().plusMinutes(5).toString());
             existingApprover.setDeviceName(approverDto.getDeviceName());
@@ -53,6 +54,8 @@ public class ApproverFacade {
             title = "Approve Request updated by " + user.getFirstName();
             body = user.getFirstName() + " has updated the Approve Request for you. Please contact him for the verification code. or cancel it.";
             log.info("AppFace::addApprover():: Approver is updated");
+            appFacade.addApps(approverDto.getApps());
+            log.info("AppFace::addApprover():: Apps are updated");
         }else if(existingApprover == null){
             log.info("AppFace::addApprover():: Approver is started to create");
             ApproverRequest approverRequest = new ApproverRequest();
@@ -66,6 +69,8 @@ public class ApproverFacade {
             title = "Approve Request by " + user.getFirstName();
             body = user.getFirstName() + " has sent you an Approve Request. Please contact him for the verification code.";
             log.info("AppFace::addApprover():: Approver is created");
+            appFacade.addApps(approverDto.getApps());
+            log.info("AppFace::addApprover():: Apps are added");
         }else {
             log.error("AppFace::addApprover():: Approver already exists for this user");
             throw new DuplicationException("Approver already exists for this user");

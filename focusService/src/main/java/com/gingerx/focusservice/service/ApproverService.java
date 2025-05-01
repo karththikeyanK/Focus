@@ -144,5 +144,16 @@ public class ApproverService {
         return ApproverDtoMapper.mapToResponse(approver);
     }
 
+    public ApproverResponse getApproverByUserIdAndApproverId(Long userId, Long approverId) {
+        log.info("ApproverService::getApproverByUserIdAndApproverId:: is start with userId: {} and approverId: {}", userId, approverId);
+        Approver approver = approverRepository.findByUser_IdAndApprover_Id(userId, approverId).orElse(null);
+        if (approver == null) {
+            log.info("ApproverService::getApproverByUserIdAndApproverId:: approver not found for userId: {} and approverId: {}", userId, approverId);
+            return null;
+        }
+        log.info("ApproverService::getApproverByUserIdAndApproverId:: is end with userId: {} and approverId: {}", userId, approverId);
+        return ApproverDtoMapper.mapToResponse(approver);
+    }
+
 
 }
