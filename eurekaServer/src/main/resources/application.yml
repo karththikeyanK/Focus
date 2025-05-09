@@ -5,14 +5,20 @@ eureka:
   instance:
     hostname: localhost
   client:
-    registerWithEureka: false  # Server does not register itself with Eureka
-    fetchRegistry: false  # Server does not need to fetch registry from another Eureka
+    registerWithEureka: false
+    fetchRegistry: false
   server:
-    enable-self-preservation: true  # Enable self-preservation mode
-    renewal-percent-threshold: 0.49 # Example: adjust renewal threshold
-    renewal-threshold-update-interval-ms: 30000 # Example: adjust threshold update interval
-    expected-response-time-ms: 1000 # Example: adjust expected response time
+    enable-self-preservation: true
+    renewal-percent-threshold: 0.49
+    renewal-threshold-update-interval-ms: 30000
+    expected-response-time-ms: 1000
 
 spring:
   application:
     name: EUREKA-SERVER
+
+# management:
+#   metrics:
+#     binders:
+#       process:
+#         enabled: false  # Correct way to disable process metrics

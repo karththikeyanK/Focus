@@ -1,81 +1,6 @@
 version: '3.8'
 
 services:
-  eureka-server:
-    build:
-      context: ./eurekaServer
-      dockerfile: Dockerfile
-    container_name: eureka-server
-    ports:
-      - "8761:8761"
-    environment:
-      SPRING_PROFILES_ACTIVE: docker
-    networks:
-      - app_network
-    healthcheck:
-      test: curl --fail http://localhost:8761/ || exit 1
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  api-gateway:
-    build:
-      context: ./gateway
-      dockerfile: Dockerfile
-    container_name: api-gateway
-    ports:
-      - "9090:9090"
-    environment:
-      EUREKA_SERVER: http://eureka-server:8761/eureka/
-      SPRING_PROFILES_ACTIVE: docker
-    depends_on:
-      eureka-server:
-        condition: service_healthy
-    networks:
-      - app_network
-
-  email-service:
-    build:
-      context: ./emailService
-      dockerfile: Dockerfile
-    container_name: email-service
-    ports:
-      - "8091:8091"
-    environment:
-      EUREKA_SERVER: http://eureka-server:8761/eureka/
-      SPRING_PROFILES_ACTIVE: docker
-    depends_on:
-      eureka-server:
-        condition: service_healthy
-    networks:
-      - app_network
-
-  focus-service:
-    build:
-      context: ./focusService
-      dockerfile: Dockerfile
-    container_name: focus-service
-    ports:
-      - "8080:8080"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/focus_v1
-      SPRING_DATASOURCE_USERNAME: karththi
-      SPRING_DATASOURCE_PASSWORD: example-password
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL8Dialect
-      EUREKA_SERVER: http://eureka-server:8761/eureka/
-      SPRING_PROFILES_ACTIVE: docker
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-    depends_on:
-      eureka-server:
-        condition: service_healthy
-      kafka:
-        condition: service_healthy
-    networks:
-      - app_network
-    volumes:
-      - upload_data:/uploads
-
   zookeeper:
     image: wurstmeister/zookeeper
     container_name: zookeeper
@@ -83,12 +8,24 @@ services:
       - "2181:2181"
     networks:
       - app_network
+    environment:
+      JVMFLAGS: "-Xms512m -Xmx512m"
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "2181"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   kafka:
     image: wurstmeister/kafka
     container_name: kafka
     ports:
       - "9092:9092"
+      - "9093:9093"
     environment:
       KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9092,OUTSIDE://localhost:9093
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
@@ -97,34 +34,112 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_CREATE_TOPICS: "send-email:1:1"
     depends_on:
-      - zookeeper
+      zookeeper:
+        condition: service_healthy
     networks:
       - app_network
     healthcheck:
-      test: [ "CMD", "kafka-broker-api-versions.sh", "--bootstrap-server", "localhost:9092" ]
+      test: ["CMD", "nc", "-z", "localhost", "9092"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  mysql:
-    image: mysql:8.0
-    container_name: mysql
-    ports:
-      - "3307:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: focus_v1
-      MYSQL_USER: karththi
-      MYSQL_PASSWORD: example-password
-    volumes:
-      - mysql_data:/var/lib/mysql
-    networks:
-      - app_network
-
-volumes:
-  mysql_data:
-  upload_data:
-
 networks:
   app_network:
     driver: bridge
+    
+    
+#  eureka-server:
+#    build:
+#      context: ./eurekaServer
+#      dockerfile: Dockerfile
+#    container_name: eureka-server
+#    ports:
+#      - "8761:8761"
+#    environment:
+#      SPRING_PROFILES_ACTIVE: docker
+#    networks:
+#      - app_network
+#    healthcheck:
+#      test: curl --fail http://localhost:8761/ || exit 1
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
+#
+#  api-gateway:
+#    build:
+#      context: ./gateway
+#      dockerfile: Dockerfile
+#    container_name: api-gateway
+#    ports:
+#      - "9090:9090"
+#    environment:
+#      EUREKA_SERVER: http://eureka-server:8761/eureka/
+#      SPRING_PROFILES_ACTIVE: docker
+#    depends_on:
+#      eureka-server:
+#        condition: service_healthy
+#    networks:
+#      - app_network
+#
+#  email-service:
+#    build:
+#      context: ./emailService
+#      dockerfile: Dockerfile
+#    container_name: email-service
+#    ports:
+#      - "8091:8091"
+#    environment:
+#      EUREKA_SERVER: http://eureka-server:8761/eureka/
+#      SPRING_PROFILES_ACTIVE: docker
+#    depends_on:
+#      eureka-server:
+#        condition: service_healthy
+#    networks:
+#      - app_network
+#
+#  focus-service:
+#    build:
+#      context: ./focusService
+#      dockerfile: Dockerfile
+#    container_name: focus-service
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/focus_v1
+#      SPRING_DATASOURCE_USERNAME: root
+#      SPRING_DATASOURCE_PASSWORD: root1234
+#      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+#      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL8Dialect
+#      EUREKA_SERVER: http://eureka-server:8761/eureka/
+#      SPRING_PROFILES_ACTIVE: docker
+#      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+#    depends_on:
+#      eureka-server:
+#        condition: service_healthy
+#      kafka:
+#        condition: service_healthy
+#    networks:
+#      - app_network
+#    volumes:
+#      - upload_data:/uploads
+
+
+#  mysql:
+#    image: mysql:8.0
+#    container_name: mysql
+#    ports:
+#      - "3307:3306"
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_DATABASE: focus_v1
+#      MYSQL_USER: root
+#      MYSQL_PASSWORD: root1234
+#    volumes:
+#      - mysql_data:/var/lib/mysql
+#    networks:
+#      - app_network
+#
+#volumes:
+#  mysql_data:
+#  upload_data:

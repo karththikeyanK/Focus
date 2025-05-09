@@ -4,8 +4,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: <YOUR_MAIL>
-    password: <YOUR_MAIL_PASSWORD>
+    username: "eimskyruleengine@gmail.com"
+    password: "fcmq sfrj lkfb mria"
     properties:
       mail:
         smtp:
@@ -13,10 +13,19 @@ spring:
           starttls:
             enable: true
 
+  kafka:
+    bootstrap-servers: localhost:9093
+
 server:
   port: 8091
 
 eureka:
   client:
-    serviceUrl:
-      defaultZone: http://eureka-server:8761/eureka/
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://eureka-server:8761/eureka/

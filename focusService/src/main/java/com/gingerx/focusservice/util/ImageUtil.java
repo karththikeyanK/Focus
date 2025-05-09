@@ -13,7 +13,7 @@ import java.util.UUID;
 @Slf4j
 public class ImageUtil {
 
-    private static final String UPLOAD_DIR = "uploads/";
+    private static final String UPLOAD_DIR = "/var/uploads/";
 
     public static String saveImage(byte[] fileBytes, String appId) {
         // Create the upload directory if it doesn't exist

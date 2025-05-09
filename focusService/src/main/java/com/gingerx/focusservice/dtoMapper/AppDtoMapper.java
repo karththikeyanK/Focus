@@ -22,6 +22,7 @@ public class AppDtoMapper {
     public static AppResponse mapToResponse(App app) {
         return AppResponse.builder()
                 .id(app.getId())
+                .appDetailId(app.getAppDetail().getId())
                 .status(app.getStatus())
                 .userId(app.getUser().getId())
                 .build();

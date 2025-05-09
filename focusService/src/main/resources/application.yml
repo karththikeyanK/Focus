@@ -3,19 +3,25 @@ spring:
     name: FOCUS-SERVICE
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql:3306/focus_v1
-    username: karththi
-    password: example-password
+#    url: jdbc:mysql://mysql:3306/focus_v1   // for docker compose
+    url: jdbc:mysql://localhost:3306/focus_v1
+    username: root
+    password: root1234
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
       properties:
         hibernate:
           dialect: org.hibernate.dialect.MySQL8Dialect
 
+  web:
+    resources:
+      static-locations: file:/var/uploads/
+
   kafka:
-    bootstrap-servers: kafka:9092
+    bootstrap-servers: localhost:9093
+#    bootstrap-servers: kafka:9092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
@@ -38,8 +44,15 @@ jwt:
 
 eureka:
   client:
-    serviceUrl:
-      defaultZone: http://eureka-server:8761/eureka/
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://eureka-server:8761/eureka/
 
 email-service:
-  url: http://api-gateway:9090/EMAIL-SERVICE/api/v1/mail/send
+#  url: http://api-gateway:9090/EMAIL-SERVICE/api/v1/mail/send
+  url: http://localhost:9090/EMAIL-SERVICE/api/v1/mail/send

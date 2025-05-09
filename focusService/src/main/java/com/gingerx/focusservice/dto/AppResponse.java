@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AppResponse {
     private Long id;
-    private String appDetailId;
+    private Long appDetailId;
     private String status;  // RESTRICTED, ALLOWED
     private Long userId;
 }

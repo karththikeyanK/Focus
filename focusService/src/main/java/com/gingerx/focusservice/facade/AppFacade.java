@@ -24,7 +24,7 @@ import java.util.List;
 public class AppFacade {
     private final AppService appService;
     private final AppDetailsService appDetailsService;
-    private ApproverService approverService;
+    private final ApproverService approverService;
 
     /**
      * This method is used to add apps and their details.
@@ -55,6 +55,7 @@ public class AppFacade {
            }
            AppRequest appRequest = appAndDetailRequest.getAppRequest();
            appRequest.setAppDetailId(appDetailResponse.getId());
+           appRequest.setStatus("ALLOWED");
            if (appService.existByUserIdAndAppId(appRequest.getUserId(), appRequest.getAppDetailId())) {
                log.info("AppFace::addApps():: App already exists for the user with appDetailId: {}", appRequest.getAppDetailId());
            } else {
@@ -69,22 +70,22 @@ public class AppFacade {
     /**
      * Only Active Approver can see the apps.
      */
-    public List<AppAndDetailResponse> getAppsByUserIdAndApproverId(ApproverRequest approverRequest){
-        log.info("AppFace::getAppsByUserIdAndApproverId():: is called with userId: {} and approverId: {}", approverRequest.getUserId(), approverRequest.getApproverId());
-        ApproverResponse approverResponse = approverService.getApproverByUserIdAndApproverId(approverRequest.getUserId(), approverRequest.getApproverId());
+    public List<AppAndDetailResponse> getAppsByUserIdAndApproverId(Long userId, Long approverId) {
+        log.info("AppFace::getAppsByUserIdAndApproverId():: is called with userId: {} and approverId: {}", userId, approverId);
+        ApproverResponse approverResponse = approverService.getApproverByUserIdAndApproverId(userId, approverId);
         if (approverResponse == null) {
-            log.info("AppFace::getAppsByUserIdAndApproverId():: Approver not found for userId: {} and approverId: {}", approverRequest.getUserId(), approverRequest.getApproverId());
+            log.info("AppFace::getAppsByUserIdAndApproverId():: Approver not found for userId: {} and approverId: {}", userId, approverId);
             throw new DataNotFoundException("Approver not found");
         }
 
         if(!ActiveStatus.ACTIVE.equals(ActiveStatus.valueOf(approverResponse.getStatus()))){
-            log.info("AppFace::getAppsByUserIdAndApproverId():: Approver is not active for userId: {} and approverId: {}", approverRequest.getUserId(), approverRequest.getApproverId());
+            log.info("AppFace::getAppsByUserIdAndApproverId():: Approver is not active for userId: {} and approverId: {}", userId, approverId);
             throw new DataNotFoundException("Approver is not active");
         }
 
-        List<App> apps = appService.getAllAppsByUserId(approverRequest.getUserId());
+        List<App> apps = appService.getAllAppsByUserId(userId);
         if (apps.isEmpty()) {
-            log.info("AppFace::getAppsByUserIdAndApproverId():: No apps found for userId: {} and approverId: {}", approverRequest.getUserId(), approverRequest.getApproverId());
+            log.info("AppFace::getAppsByUserIdAndApproverId():: No apps found for userId: {} and approverId: {}", userId, approverId);
             throw new DataNotFoundException("No apps found");
         }
         List<AppAndDetailResponse> appAndDetailResponses = new ArrayList<>();
@@ -95,7 +96,9 @@ public class AppFacade {
                     .build();
             appAndDetailResponses.add(appAndDetailResponse);
         }
-        log.info("AppFace::getAppsByUserIdAndApproverId():: is finished with userId: {} and approverId: {}", approverRequest.getUserId(), approverRequest.getApproverId());
+        log.info("AppFace::getAppsByUserIdAndApproverId():: is finished with userId: {} and approverId: {}", userId, approverId);
         return appAndDetailResponses;
     }
+
+
 }
