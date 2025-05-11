@@ -101,4 +101,24 @@ public class AppFacade {
     }
 
 
+    public List<AppAndDetailResponse> getAppsByUserId(Long userId) {
+        log.info("AppFace::getAppsByUserId():: is called with userId: {}", userId);
+        List<App> apps = appService.getAllAppsByUserId(userId);
+        if (apps.isEmpty()) {
+            log.info("AppFace::getAppsByUserId():: No apps found for userId: {}", userId);
+            throw new DataNotFoundException("No apps found");
+        }
+        List<AppAndDetailResponse> appAndDetailResponses = new ArrayList<>();
+        for (App app : apps) {
+            AppAndDetailResponse appAndDetailResponse = AppAndDetailResponse.builder()
+                    .appResponse(AppDtoMapper.mapToResponse(app))
+                    .appDetailResponse(AppDetailDtoMapper.mapToResponse(app.getAppDetail()))
+                    .build();
+            appAndDetailResponses.add(appAndDetailResponse);
+        }
+        log.info("AppFace::getAppsByUserId():: is finished with userId: {}", userId);
+        return appAndDetailResponses;
+    }
+
+
 }

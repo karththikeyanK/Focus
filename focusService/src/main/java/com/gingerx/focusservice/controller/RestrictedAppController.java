@@ -44,4 +44,9 @@ public class RestrictedAppController {
         return ResponseEntity.ok(new ApiResponse<>(ApiResponse.SUCCESS,"Restricted App Retrieved", appFacade.getAppsByUserIdAndApproverId(userId,approverId)));
     }
 
+    @GetMapping("/get-apps-by-user/{userId}")
+    public ResponseEntity<ApiResponse<List<AppAndDetailResponse>>> getAppsByUser(@PathVariable Long userId){
+        return ResponseEntity.ok(new ApiResponse<>(ApiResponse.SUCCESS,"Restricted App Retrieved", appFacade.getAppsByUserId(userId)));
+    }
+
 }
