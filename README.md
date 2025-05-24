@@ -82,3 +82,11 @@ Focus is a productivity app designed to help users manage their social media usa
 ## License
 
 All rights reserved under **GINGERX** © 2024 Oct.
+
+## Screeshots
+![Flash Screen](screenshots/focus.png)
+![Permision Screen](screenshots/permision.png)
+![Permision Screen](screenshots/allow_permision.png)
+
+## 🎥 Demo
+[![Watch the Demo](https://img.youtube.com/vi/IGx5TFhAxAw/0.jpg)](https://youtu.be/IGx5TFhAxAw)
