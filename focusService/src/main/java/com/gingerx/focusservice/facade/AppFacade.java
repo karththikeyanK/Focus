@@ -1,5 +1,7 @@
 package com.gingerx.focusservice.facade;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gingerx.focusservice.dto.*;
 import com.gingerx.focusservice.dtoMapper.AppDetailDtoMapper;
 import com.gingerx.focusservice.dtoMapper.AppDtoMapper;
@@ -9,14 +11,17 @@ import com.gingerx.focusservice.exception.DataNotFoundException;
 import com.gingerx.focusservice.service.AppDetailsService;
 import com.gingerx.focusservice.service.AppService;
 import com.gingerx.focusservice.service.ApproverService;
+import com.gingerx.focusservice.service.UserService;
 import com.gingerx.focusservice.util.ImageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -25,6 +30,9 @@ public class AppFacade {
     private final AppService appService;
     private final AppDetailsService appDetailsService;
     private final ApproverService approverService;
+    private final UserService userService;
+    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final ObjectMapper objectMapper;
 
     /**
      * This method is used to add apps and their details.
@@ -118,6 +126,59 @@ public class AppFacade {
         }
         log.info("AppFace::getAppsByUserId():: is finished with userId: {}", userId);
         return appAndDetailResponses;
+    }
+
+
+    public AppResponse updateStatus(Long appId, Long approverId, AppRequest appRequest) {
+        log.info("AppFace::updateStatus():: is called with appId: {} and status: {}", appId, appRequest.getStatus());
+        AppResponse appResponse = appService.getRestrictedAppById(appId);
+        if (appResponse == null) {
+            log.info("AppFace::updateStatus():: App not found for appId: {}", appId);
+            throw new DataNotFoundException("App not found");
+        }
+
+        ApproverResponse approverResponse = approverService.getApproverByUserIdAndApproverId(appResponse.getUserId(), approverId);
+        if (approverResponse == null) {
+            log.info("AppFace::updateStatus():: Approver not found for userId: {} and approverId: {}", appResponse.getUserId(), approverId);
+            throw new DataNotFoundException("Illegal approver!. Approver not found");
+        }
+
+        if(!ActiveStatus.ACTIVE.equals(ActiveStatus.valueOf(approverResponse.getStatus()))){
+            log.info("AppFace::updateStatus():: Approver is not active for userId: {} and approverId: {}", appResponse.getUserId(), approverId);
+            throw new DataNotFoundException("Illegal approver!. Approver is not active");
+        }
+
+        AppRequest appRequestToUpdate = AppRequest.builder()
+                .userId(appResponse.getUserId())
+                .appDetailId(appResponse.getAppDetailId())
+                .status(appRequest.getStatus())
+                .build();
+
+        AppResponse updatedAppResponse = appService.update(appId, appRequestToUpdate);
+        log.info("AppFace::updateStatus():: App status updated successfully for appId: {}", appId);
+
+
+        NotificationDto notificationDto = new NotificationDto();
+        UserResponse userResponse = userService.getUserById(updatedAppResponse.getUserId());
+        AppDetailResponse appDetailResponse = appDetailsService.getAppDetailById(updatedAppResponse.getId());
+        if (updatedAppResponse.getStatus().equals("ALLOWED")){
+            notificationDto.setTitle(appDetailResponse.getAppName()+" Approved");
+            notificationDto.setBody(appDetailResponse.getAppName()+" has been approved by your approver");
+        }else {
+            notificationDto.setTitle(appDetailResponse.getAppName()+" Restricted");
+            notificationDto.setBody(appDetailResponse.getAppName()+" has been restricted by your approver");
+        }
+        notificationDto.setRecipientToken(userResponse.getFirebaseToken());
+        notificationDto.setData(Map.of("type", "status-update"));
+        try {
+            String jsonString = objectMapper.writeValueAsString(notificationDto);
+            kafkaTemplate.send("send-push-notification", jsonString);
+            log.info("AppFace::updateStatus():: notification is sent to Kafka");
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        log.info("AppFace::updateStatus():: notification is sent to user: {}", userResponse.getId());
+        return updatedAppResponse;
     }
 
 

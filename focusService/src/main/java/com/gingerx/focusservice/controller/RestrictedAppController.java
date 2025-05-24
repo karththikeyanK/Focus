@@ -49,4 +49,9 @@ public class RestrictedAppController {
         return ResponseEntity.ok(new ApiResponse<>(ApiResponse.SUCCESS,"Restricted App Retrieved", appFacade.getAppsByUserId(userId)));
     }
 
+    @PutMapping("/update-status/{appId}/{approverId}")
+    public ResponseEntity<ApiResponse<AppResponse>> updateStatus(@PathVariable Long appId, @PathVariable Long approverId, @RequestBody AppRequest appRequest){
+        return ResponseEntity.ok(new ApiResponse<>(ApiResponse.SUCCESS,"Restricted App Updated", appFacade.updateStatus(appId, approverId, appRequest)));
+    }
+
 }

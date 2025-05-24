@@ -8,7 +8,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/controller/RestrictedAppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/controller/RestrictedAppController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dto/AppRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/dto/AppRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/facade/AppFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/facade/AppFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/service/AppDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/focusService/src/main/java/com/gingerx/focusservice/service/AppDetailsService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,6 +190,9 @@
       <workItem from="1746806400451" duration="6956000" />
       <workItem from="1746950157057" duration="91000" />
       <workItem from="1746986265828" duration="259000" />
+      <workItem from="1746987559635" duration="2613000" />
+      <workItem from="1746990851404" duration="4706000" />
+      <workItem from="1748098222624" duration="83000" />
     </task>
     <servers />
   </component>

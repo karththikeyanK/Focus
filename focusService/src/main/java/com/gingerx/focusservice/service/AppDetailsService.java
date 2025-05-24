@@ -33,10 +33,10 @@ public class AppDetailsService {
     }
 
 
-    public AppDetailResponse getAppDetailById(String appId) {
-        log.info("AppDetailsService::getAppDetail():: is called with appId: {}", appId);
-        AppDetail appDetail = appDetailRepository.findByAppId(appId)
-                .orElseThrow(() -> new DataNotFoundException("AppDetail not found with appId: " + appId));
+    public AppDetailResponse getAppDetailById(Long id) {
+        log.info("AppDetailsService::getAppDetail():: is called with appId: {}", id);
+        AppDetail appDetail = appDetailRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("AppDetail not found with appId: " + id));
         log.info("AppDetailsService::getAppDetail():: AppDetail retrieved successfully with name: {}", appDetail.getAppName());
         return AppDetailDtoMapper.mapToResponse(appDetail);
     }
